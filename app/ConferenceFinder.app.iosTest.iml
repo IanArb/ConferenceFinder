@@ -5,9 +5,9 @@
       <configuration version="3" platform="Native " allPlatforms="Native []" useProjectSettings="false" isTestModule="true" externalProjectId=":app">
         <dependsOnModuleNames>:app:commonTest</dependsOnModuleNames>
         <sourceSets>
-          <sourceSet>ConferenceFinder.app.iosMain</sourceSet>
-          <sourceSet>ConferenceFinder.app.commonMain</sourceSet>
           <sourceSet>ConferenceFinder.app.commonTest</sourceSet>
+          <sourceSet>ConferenceFinder.app.commonMain</sourceSet>
+          <sourceSet>ConferenceFinder.app.iosMain</sourceSet>
         </sourceSets>
         <newMppModelJpsModuleKind>COMPILATION_AND_SOURCE_SET_HOLDER</newMppModelJpsModuleKind>
         <compilerSettings />
