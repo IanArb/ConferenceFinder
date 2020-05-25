@@ -1,0 +1,144 @@
+plugins {
+    id 'org.jetbrains.kotlin.multiplatform' version '1.3.70'
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.3.70'
+}
+repositories {
+    google()
+    jcenter()
+    mavenCentral()
+}
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlinx-serialization'
+
+android {
+    compileSdkVersion 29
+    defaultConfig {
+        applicationId 'com.ianarbuckle.conferencefinder'
+        minSdkVersion 23
+        targetSdkVersion 29
+        versionCode 1
+        versionName '1.0'
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'src/androidMain/AndroidManifest.xml'
+            java.srcDirs = ['src/androidMain/java']
+            res.srcDirs = ['src/androidMain/res']
+        }
+    }
+}
+
+//dependencies {
+//    implementation fileTree(dir: 'libs', include: ['*.jar'])
+//    implementation 'androidx.appcompat:appcompat:1.1.0'
+//    implementation 'androidx.core:core-ktx:1.2.0'
+//
+//    implementation 'com.google.android.material:material:1.1.0'
+//
+//    implementation "androidx.core:core-ktx:1.2.0"
+//    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+//    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
+//
+//    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7"
+//
+//    implementation "androidx.ui:ui-core:0.1.0-dev11"
+//    implementation "androidx.ui:ui-layout:0.1.0-dev11"
+//    implementation "androidx.ui:ui-material:0.1.0-dev11"
+//    implementation "androidx.ui:ui-tooling:0.1.0-dev11"
+//    implementation "androidx.ui:ui-graphics:0.1.0-dev11"
+//    implementation "androidx.ui:ui-livedata:0.1.0-dev11"
+//
+//    testImplementation 'junit:junit:4.13'
+//    androidTestImplementation 'androidx.test:runner:1.2.0'
+//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+//}
+
+kotlin {
+    android("android")
+    // This is for iPhone emulator
+    // Switch here to iosArm64 (or iosArm32) to build library for iPhone device
+    iosX64("ios") {
+        binaries {
+            framework()
+        }
+    }
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation kotlin('stdlib-common')
+                implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:0.20.0"
+                implementation "io.ktor:ktor-client-core:1.3.2"
+                implementation "io.ktor:ktor-client-json:1.3.2"
+                implementation "io.ktor:ktor-client-logging:1.3.2"
+                implementation "io.ktor:ktor-client-serialization:1.3.2"
+                implementation "io.ktor:ktor-serialization:1.3.2"
+            }
+        }
+        commonTest {
+            dependencies {
+        		implementation kotlin('test-common')
+        		implementation kotlin('test-annotations-common')
+            }
+        }
+        androidMain {
+            dependencies {
+                implementation kotlin('stdlib')
+                // Coroutines
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.7"
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7"
+
+                implementation 'androidx.appcompat:appcompat:1.1.0'
+                implementation 'androidx.core:core-ktx:1.2.0'
+
+                implementation "androidx.ui:ui-core:0.1.0-dev11"
+                implementation "androidx.ui:ui-layout:0.1.0-dev11"
+                implementation "androidx.ui:ui-material:0.1.0-dev11"
+                implementation "androidx.ui:ui-tooling:0.1.0-dev11"
+                implementation "androidx.ui:ui-graphics:0.1.0-dev11"
+                implementation "androidx.ui:ui-livedata:0.1.0-dev11"
+
+            }
+        }
+        androidTest {
+            dependencies {
+                implementation kotlin('test')
+                implementation kotlin('test-junit')
+            }
+        }
+        iosMain {
+        }
+        iosTest {
+        }
+    }
+}
+
+// This task attaches native framework built from ios module to Xcode project
+// (see iosApp directory). Don't run this task directly,
+// Xcode runs this task itself during its build process.
+// Before opening the project from iosApp directory in Xcode,
+// make sure all Gradle infrastructure exists (gradle.wrapper, gradlew).
+task copyFramework {
+    def buildType = project.findProperty('kotlin.build.type') ?: 'DEBUG'
+    def target = project.findProperty('kotlin.target') ?: 'ios'
+    dependsOn kotlin.targets."$target".binaries.getFramework(buildType).linkTask
+
+    doLast {
+        def srcFile = kotlin.targets."$target".binaries.getFramework(buildType).outputFile
+        def targetDir = getProperty('configuration.build.dir')
+        copy {
+            from srcFile.parent
+            into targetDir
+            include 'app.framework/**'
+            include 'app.framework.dSYM'
+        }
+    }
+}
