@@ -1,21 +1,21 @@
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
-
 plugins {
     kotlin("multiplatform")
     id("kotlinx-serialization")
     id("com.android.library")
+    id("org.jetbrains.kotlin.native.cocoapods")
 }
 
 android {
     compileSdkVersion(29)
 
     defaultConfig {
-        minSdkVersion(23)
+        minSdkVersion(21)
         targetSdkVersion(29)
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -26,94 +26,148 @@ android {
 }
 
 kotlin {
-    // This is for iPhone emulator
-    // Switch here to iosArm64 (or iosArm32) to build library for iPhone device
-    val buildForDevice = project.findProperty("device") as? Boolean ?: false
-    val iosTarget = if(buildForDevice) iosArm64("ios") else iosX64("ios")
-    iosTarget.binaries {
-        framework {
-            // Disable bitcode embedding for the simulator build.
-            if (!buildForDevice) {
-                embedBitcode("disable")
-            }
+    targets {
+        val sdkName: String? = System.getenv("SDK_NAME")
+
+        val isiOSDevice = sdkName.orEmpty().startsWith("iphoneos")
+        if (isiOSDevice) {
+            iosArm64("iOS64")
+        } else {
+            iosX64("iOS")
         }
+
+        val isWatchOSDevice = sdkName.orEmpty().startsWith("watchos")
+        if (isWatchOSDevice) {
+            watchosArm64("watch")
+        } else {
+            watchosX86("watch")
+        }
+
+        macosX64("macOS")
+        android()
+        jvm()
+    }
+
+    cocoapods {
+        // Configure fields required by CocoaPods.
+        summary = "Some description for a Kotlin/Native module"
+        homepage = "Link to a Kotlin/Native module homepage"
     }
 
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation( "org.jetbrains.kotlin:kotlin-stdlib-common")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:0.20.0")
+                // Kotlin
+                implementation("org.jetbrains.kotlin:kotlin-stdlib-common:1.3.71")
+
+                // Coroutines
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.3.7")
+
+                // Ktor
                 implementation("io.ktor:ktor-client-core:1.3.2")
                 implementation("io.ktor:ktor-client-json:1.3.2")
                 implementation("io.ktor:ktor-client-logging:1.3.2")
                 implementation("io.ktor:ktor-client-serialization:1.3.2")
                 implementation("io.ktor:ktor-serialization:1.3.2")
-            }
-        }
-        val commonTest by getting {
-            dependencies {
-                implementation("org.jetbrains.kotlin:kotlin-test-common")
-                implementation("org.jetbrains.kotlin:kotlin-test-annotations-common")
+
+                // Serialize
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:0.20.0")
+
             }
         }
 
         val androidMain by getting {
             dependencies {
-                implementation( "org.jetbrains.kotlin:kotlin-stdlib-common")
+                // Kotlin
+                implementation("org.jetbrains.kotlin:kotlin-stdlib:1.3.71")
+
+                // Ktor
+                implementation("io.ktor:ktor-client-android:1.3.2")
+                implementation("io.ktor:ktor-client-core-jvm:1.3.2")
+                implementation("io.ktor:ktor-client-json-jvm:1.3.2")
+                implementation("io.ktor:ktor-client-logging-jvm:1.3.2")
+                implementation("io.ktor:ktor-client-serialization-jvm:1.3.2")
+
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0")
+
                 // Coroutines
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.7")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7")
             }
         }
 
-        val androidTest by getting {
+        val jvmMain by getting {
             dependencies {
-//                implementation kotlin('test')
-//                implementation kotlin('test-junit')
+                // Kotlin
+                implementation("org.jetbrains.kotlin:kotlin-stdlib:1.3.71")
+
+                // Coroutines
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7")
+
+                // Ktor
+                implementation("io.ktor:ktor-server-core:1.3.2")
+
+                implementation("io.ktor:ktor-client-core-jvm:1.3.2")
+                implementation("io.ktor:ktor-client-json-jvm:1.3.2")
+                implementation("io.ktor:ktor-client-logging-jvm:1.3.2")
+                implementation("io.ktor:ktor-client-serialization-jvm:1.3.2")
+                implementation("io.ktor:ktor-client-apache:1.3.2")
+//                implementation(Ktor.slf4j)
+
+
+                // Serialize
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0")
+
             }
         }
-        val iosMain by getting {
+
+        val iOSMain by getting {
+            dependencies {
+
+                implementation("io.ktor:ktor-client-ios:1.3.2")
+                implementation("io.ktor:ktor-client-core-native:1.3.2")
+                implementation("io.ktor:ktor-client-json-native:1.3.2")
+                implementation("io.ktor:ktor-client-logging-native:1.3.2")
+                implementation("io.ktor:ktor-client-serialization-native:1.3.2")
+
+                // Serialize
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.20.0")
+
+            }
         }
-        val iosTest by getting {
+
+        val watchMain by getting {
+            dependencies {
+
+                implementation("io.ktor:ktor-client-ios:1.3.2")
+                implementation("io.ktor:ktor-client-core-native:1.3.2")
+                implementation("io.ktor:ktor-client-json-native:1.3.2")
+                implementation("io.ktor:ktor-client-logging-native:1.3.2")
+                implementation("io.ktor:ktor-client-serialization-native:1.3.2")
+
+                // Serialize
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.20.0")
+
+            }
         }
-    }
-}
 
-//// This task attaches native framework built from ios module to Xcode project
-//// (see iosApp directory). Don't run this task directly,
-//// Xcode runs this task itself during its build process.
-//// Before opening the project from iosApp directory in Xcode,
-//// make sure all Gradle infrastructure exists (gradle.wrapper, gradlew).
-//task copyFramework {
-//    def buildType = project.findProperty('kotlin.build.type') ?: 'DEBUG'
-//    def target = project.findProperty('kotlin.target') ?: 'ios'
-//    dependsOn kotlin.targets."$target".binaries.getFramework(buildType).linkTask
-//
-//    doLast {
-//        def srcFile = kotlin.targets."$target".binaries.getFramework(buildType).outputFile
-//        def targetDir = getProperty('configuration.build.dir')
-//        copy {
-//            from srcFile.parent
-//            into targetDir
-//            include 'app.framework/**'
-//            include 'app.framework.dSYM'
-//        }
-//    }
-//}
+        val macOSMain by getting {
+            dependencies {
+                // Coroutines
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-macosx64:1.3.2")
 
-tasks.register("copyFramework") {
-    val buildType = project.findProperty("kotlin.build.type") as? String ?: "DEBUG"
-    dependsOn("link${buildType.toLowerCase().capitalize()}FrameworkIos")
 
-    doLast {
-        val srcFile = (kotlin.targets["ios"] as KotlinNativeTarget).binaries.getFramework(buildType).outputFile
-        val targetDir = project.property("configuration.build.dir")!!
-                copy {
-                    from(srcFile.parent)
-                    into(targetDir)
-                    include( "app.framework/**")
-                    include("app.framework.dSYM")
-                }
+                // Ktor
+                implementation("io.ktor:ktor-client-curl:1.3.2")
+                implementation("io.ktor:ktor-client-core-macosx64:1.3.2")
+                implementation("io.ktor:ktor-client-json-macosx64:1.3.2")
+                implementation("io.ktor:ktor-client-logging-macosx64:1.3.2")
+                implementation("io.ktor:ktor-client-serialization-macosx64:1.3.2")
+
+                // Serialize
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-macosx64:0.20.0")
+
+            }
+        }
     }
 }
