@@ -1,23 +1,24 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 val ktor_version: String by project
 val kotlin_version: String by project
 val logback_version: String by project
-val exposed_version: String by project
-val hikaricp_version: String by project
-val postgres_version: String by project
 
 plugins {
     application
-    kotlin("jvm") version "1.3.70"
+    kotlin("jvm")
+    distribution
 }
 
 group = "com.ianarbuckle.conferencesapi"
 version = "0.0.1"
 
 application {
-    mainClassName = "io.ktor.server.netty.EngineMain"
+    mainClassName = "com.ianarbuckle.conferencesapi.ApplicationKt"
 }
+
+apply(plugin = "com.github.johnrengelman.shadow")
 
 repositories {
     mavenLocal()
@@ -46,5 +47,13 @@ sourceSets["test"].resources.srcDirs("testresources")
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+}
+
+tasks.withType<ShadowJar> {
+    archiveBaseName.set("conferences-api")
+    mergeServiceFiles()
+    manifest {
+        attributes(mapOf("Main-Class" to application.mainClassName))
     }
 }
