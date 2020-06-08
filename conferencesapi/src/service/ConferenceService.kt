@@ -19,4 +19,5 @@ class ConferenceService {
             .getCollection<Conference>(Constants.COLLECTION_NAME)
             .insertOne(request, InsertOneOptions())
     }
+
 }

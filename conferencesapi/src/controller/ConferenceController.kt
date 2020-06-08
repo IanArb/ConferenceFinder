@@ -5,10 +5,7 @@ import com.ianarbuckle.conferencesapi.service.ConferenceService
 import io.ktor.application.call
 import io.ktor.http.HttpStatusCode
 import io.ktor.response.respond
-import io.ktor.routing.Route
-import io.ktor.routing.get
-import io.ktor.routing.post
-import io.ktor.routing.route
+import io.ktor.routing.*
 
 fun Route.conferenceRoutes() {
     val service by lazy { ConferenceService() }

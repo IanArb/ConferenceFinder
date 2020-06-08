@@ -2,7 +2,7 @@ package com.ianarbuckle.conferencesfinder
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.ianarbuckle.conferencesfinder.ui.main.MainFragment
+import com.ianarbuckle.conferencesfinder.ui.conferences.ConferencesFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.main_activity)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, MainFragment.newInstance())
+                .replace(R.id.container, ConferencesFragment.newInstance())
                 .commitNow()
         }
     }
