@@ -1,0 +1,5 @@
+{
+  "name": "Conferences API Ktor",
+  "description": "Conferences API built with Ktor",
+  "image": "heroku/java"
+}

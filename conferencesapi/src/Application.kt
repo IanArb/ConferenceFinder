@@ -20,7 +20,6 @@ fun Application.module(testing: Boolean = false) {
 
     install(ContentNegotiation) {
         jackson {
-            registerModule(KotlinModule())
             enable(SerializationFeature.INDENT_OUTPUT)
         }
     }
