@@ -51,9 +51,11 @@ tasks.withType<KotlinCompile> {
 }
 
 tasks.withType<ShadowJar> {
+    archiveClassifier.set("all")
     archiveBaseName.set("conferences-api")
+    configurations = listOf(project.configurations.compile.get() ,project.configurations.runtimeClasspath.get())
     mergeServiceFiles()
     manifest {
-        attributes(mapOf("Main-Class" to application.mainClassName))
+        attributes["Main-Class"] = application.mainClassName
     }
 }
