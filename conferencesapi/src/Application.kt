@@ -9,10 +9,13 @@ import io.ktor.features.ContentNegotiation
 import io.ktor.http.HttpMethod
 import io.ktor.jackson.jackson
 import io.ktor.routing.routing
+import io.ktor.server.engine.commandLineEnvironment
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 
-fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
+fun main(args: Array<String>) {
+    embeddedServer(Netty, commandLineEnvironment(args)).start(wait = true)
+}
 
 @Suppress("unused") // Referenced in application.conf
 @kotlin.jvm.JvmOverloads
