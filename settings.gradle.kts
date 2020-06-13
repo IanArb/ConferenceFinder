@@ -2,4 +2,4 @@ rootProject.name = "ConferenceFinder"
 
 enableFeaturePreview("GRADLE_METADATA")
 
-include( ":app", ":common", ":conferencesapi")
+include( ":app", ":common")
