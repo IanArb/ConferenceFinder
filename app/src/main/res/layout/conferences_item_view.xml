@@ -4,7 +4,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         xmlns:tools="http://schemas.android.com/tools"
-        android:padding="16dp"
+        android:layout_marginBottom="@dimen/spacing_normal"
+        android:padding="@dimen/spacing_normal"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         app:cardCornerRadius="6dp"
         app:cardElevation="6dp"
@@ -34,21 +35,25 @@
                 app:layout_constraintTop_toBottomOf="@+id/banner"
                 app:layout_constraintStart_toStartOf="parent"
                 android:textColor="@color/colorBlack"
+                android:textStyle="bold"
                 android:layout_marginTop="@dimen/spacing_large"
-                android:layout_marginStart="@dimen/spacing_small"
+                android:layout_marginStart="@dimen/spacing_normal"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 tools:text="London DroidCon"
         />
 
         <TextView
                 android:id="@+id/location"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/title"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="@dimen/spacing_xx_large"
+                android:layout_marginTop="@dimen/spacing_normal"
                 android:textColor="@color/colorBlack"
                 android:drawableStart="@drawable/ic_location_on_24px"
-                android:drawablePadding="@dimen/spacing_small"
+                android:layout_marginStart="@dimen/spacing_x_large"
+                android:textSize="16sp"
+                android:drawablePadding="@dimen/spacing_medium"
                 tools:text="London, United Kingdom"
         />
 
@@ -57,13 +62,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorBlack"
-                android:drawableStart="@drawable/ic_access_time_24px"
-                android:drawablePadding="@dimen/spacing_small"
-                android:layout_marginTop="@dimen/spacing_medium"
+                android:drawableStart="@drawable/ic_date_range_24px"
+                android:drawablePadding="@dimen/spacing_medium"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:layout_marginStart="@dimen/spacing_x_large"
+                android:textSize="16sp"
                 app:layout_constraintTop_toBottomOf="@+id/location"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:text="29th - 30th July"
                 />
+
+        <TextView
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/dates"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="@dimen/spacing_normal"
+                android:layout_marginStart="@dimen/spacing_normal"
+                android:paddingBottom="@dimen/spacing_large"
+                android:textColor="@color/colorGreen"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                tools:text="Upcoming"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
