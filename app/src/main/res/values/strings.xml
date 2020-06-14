@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">conferencesfinder</string>
+    <string name="location_format">%1s, %2s</string>
+    <string name="date_format">%1s - %2s</string>
 </resources>

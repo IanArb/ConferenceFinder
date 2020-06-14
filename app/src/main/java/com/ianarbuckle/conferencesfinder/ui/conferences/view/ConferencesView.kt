@@ -17,11 +17,6 @@ class ConferencesView constructor(context: Context, attrs: AttributeSet ? = null
 
     init {
         inflate(context, R.layout.main_fragment, this)
-
-        toolbar.apply {
-            title = "Conferences"
-            setTitleTextColor(R.color.colorBlack)
-        }
     }
 
     fun initAdapter(conferences: List<Conference>) {
@@ -32,11 +27,11 @@ class ConferencesView constructor(context: Context, attrs: AttributeSet ? = null
     }
 
     fun showLoading() {
-        progressBar.isVisible
+        progressBar.isVisible = true
     }
 
     fun hideLoading() {
-        progressBar.isGone
+        progressBar.isGone = true
     }
 
     fun showError() {

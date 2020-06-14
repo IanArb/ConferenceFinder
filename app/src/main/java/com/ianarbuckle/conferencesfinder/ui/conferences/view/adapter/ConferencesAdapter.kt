@@ -3,12 +3,15 @@ package com.ianarbuckle.conferencesfinder.ui.conferences.view.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ianarbuckle.conferencesfinder.R
 import com.ianarbuckle.conferencesfinder.utils.provideImage
 import conferences.model.Conference
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeFormatterBuilder
+import java.time.temporal.ChronoField
+import kotlinx.android.synthetic.main.conferences_item_view.view.*
 
 class ConferencesAdapter(private val conferences: List<Conference>) : RecyclerView.Adapter<ConferencesAdapter.ConferencesViewHolder>() {
 
@@ -27,14 +30,33 @@ class ConferencesAdapter(private val conferences: List<Conference>) : RecyclerVi
     inner class ConferencesViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
         fun bind(conference: Conference) {
-            val banner = itemView.findViewById<ImageView>(R.id.banner)
-            val title = itemView.findViewById<TextView>(R.id.title)
-            val location = itemView.findViewById<TextView>(R.id.location)
-            val dates = itemView.findViewById<TextView>(R.id.dates)
+            val name = conference.location.country.name
+            val city = conference.location.country.city
+            val startDate = conference.dates.startDate
 
-            banner.provideImage(itemView.context, conference.logoUrl)
-            title.text = conference.name
-            location.text = conference.location.country.name + conference.location.country.city
+            itemView.status.text = conference.status
+            itemView.banner.provideImage(itemView.context, conference.logoUrl)
+            itemView.title.text = conference.name
+
+            if (name.isEmpty() || city.isEmpty()) {
+                itemView.location.text = "Virtual"
+            } else {
+                val locationFormat = itemView.context.getString(R.string.location_format, name, city)
+                itemView.location.text = locationFormat
+            }
+
+            val dateFormat = dateFormat("yyyy-MM-dd")
+            val parseStartDate = LocalDate.parse(startDate, dateFormat)
+            itemView.dates.text = parseStartDate.toString()
         }
+    }
+
+    fun dateFormat(pattern: String): DateTimeFormatter {
+        val dateTimeFormatter = DateTimeFormatter.ofPattern(pattern)
+        return DateTimeFormatterBuilder().append(dateTimeFormatter)
+            .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
+            .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
+            .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
+            .toFormatter()
     }
 }

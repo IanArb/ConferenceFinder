@@ -7,9 +7,9 @@ val logback_version: String by project
 
 plugins {
     application
-    kotlin("jvm") version "1.3.70"
+    kotlin("jvm")
     distribution
-    id("com.github.johnrengelman.shadow") version "5.2.0"
+    id("com.github.johnrengelman.shadow")
 }
 
 group = "com.ianarbuckle.conferencesapi"

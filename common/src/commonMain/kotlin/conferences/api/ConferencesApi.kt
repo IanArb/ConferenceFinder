@@ -10,7 +10,7 @@ import conferences.model.Conference
 
 class ConferencesApi {
 
-    private val baseUrl = "http://localhost:8080"
+    private val baseUrl = "http://35.205.117.180"
 
     private val client by lazy {
         HttpClient {
