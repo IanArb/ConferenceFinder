@@ -61,7 +61,9 @@ kotlin {
                 implementation("org.jetbrains.kotlin:kotlin-stdlib-common:1.3.71")
 
                 // Coroutines
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.3.7")
+                //Support kotlin/native blocking
+                // Issue tracker: https://github.com/Kotlin/kotlinx.coroutines/issues/462
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.3.5-native-mt")
 
                 // Ktor
                 implementation("io.ktor:ktor-client-core:1.3.2")
@@ -129,6 +131,8 @@ kotlin {
                 implementation("io.ktor:ktor-client-json-native:1.3.2")
                 implementation("io.ktor:ktor-client-logging-native:1.3.2")
                 implementation("io.ktor:ktor-client-serialization-native:1.3.2")
+
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:1.3.5-native-mt")
 
                 // Serialize
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.20.0")
