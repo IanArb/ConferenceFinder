@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ianarbuckle.conferencesfinder.R
 import com.ianarbuckle.conferencesfinder.utils.provideImage
 import conferences.model.Conference
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeFormatterBuilder
-import java.time.temporal.ChronoField
+import org.threeten.bp.LocalDate
+import org.threeten.bp.format.DateTimeFormatter
+import org.threeten.bp.format.DateTimeFormatterBuilder
+import org.threeten.bp.temporal.ChronoField
 import kotlinx.android.synthetic.main.conferences_item_view.view.*
 
 class ConferencesAdapter(private val conferences: List<Conference>) : RecyclerView.Adapter<ConferencesAdapter.ConferencesViewHolder>() {

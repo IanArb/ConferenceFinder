@@ -5,6 +5,9 @@ import conferences.model.Conference
 import conferences.utils.Result
 import conferences.utils.safeApiCall
 import io.ktor.utils.io.errors.IOException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class ConferencesRepository {
 
@@ -24,12 +27,17 @@ class ConferencesRepository {
         errorMessage = "Failed to retrieve conferences"
     )
 
-//    //iOS
-//    fun fetchConferences(success: (List<Conference>) -> Unit) {
-//        GlobalScope.launch(Dispatchers.Main) {
-//            success(fetchConferences())
-//        }
-//    }
+    //iOS
+    fun fetchConferences(success: (List<Conference>) -> Unit) {
+        GlobalScope.launch(Dispatchers.Main) {
+            val result = fetchConferences()
+            if (result is Result.Success) {
+                success(result.data)
+            } else {
+                success(emptyList())
+            }
+        }
+    }
 
 
 }
