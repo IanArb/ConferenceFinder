@@ -42,16 +42,29 @@ struct PersonView : View {
                     
         
                    HStack {
-                       VStack(alignment: .leading) {
+                       VStack(alignment: .leading,
+                       spacing: 10) {
+                        
                         Text(conference.name)
                                .font(.headline)
                                .foregroundColor(.secondary)
-                        Text(conference.location.country.name + ", " + conference.location.country.city)
-                               .font(.caption)
-                               .foregroundColor(.secondary)
-                        Text(conference.dates.startDate + " - " + conference.dates.endDate)
+                        HStack {
+                            Image(uiImage: UIImage(systemName: "location")!)
+                            
+                            Text(conference.location.country.name + ", " + conference.location.country.city)
+                                   .font(.caption)
+                                   .foregroundColor(.secondary)
+                        }
+                    
+                        HStack {
+                            Image(uiImage: UIImage(systemName: "calendar")!)
+                            
+                            Text(conference.dates.startDate)
                             .font(.caption)
                             .foregroundColor(.secondary)
+                        }
+                        
+                        
                         Text(conference.status)
                         .font(.caption)
                         .foregroundColor(.green)
