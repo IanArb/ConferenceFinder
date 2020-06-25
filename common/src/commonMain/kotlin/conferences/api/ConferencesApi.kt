@@ -11,7 +11,7 @@ import io.ktor.client.request.header
 
 class ConferencesApi {
 
-    private val baseUrl = "http://35.205.117.180"
+    private val baseUrl = "http://35.205.203.3"
 
     private val client by lazy {
         HttpClient {

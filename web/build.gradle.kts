@@ -14,8 +14,8 @@ dependencies {
     implementation(npm("utf-8-validate"))
     implementation(npm("fs"))
 
-    implementation("org.jetbrains:kotlin-react:16.13.0-pre.93-kotlin-1.3.70")
-    implementation("org.jetbrains:kotlin-react-dom:16.13.0-pre.93-kotlin-1.3.70")
+    implementation("org.jetbrains:kotlin-react:16.13.0-pre.94-kotlin-1.3.70")
+    implementation("org.jetbrains:kotlin-react-dom:16.13.0-pre.94-kotlin-1.3.70")
     implementation(npm("react", "16.13.0"))
     implementation(npm("react-dom", "16.13.0"))
 
