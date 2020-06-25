@@ -46,6 +46,9 @@ kotlin {
         macosX64("macOS")
         android()
         jvm()
+        js {
+            browser()
+        }
     }
 
     cocoapods {
@@ -171,6 +174,24 @@ kotlin {
                 // Serialize
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-macosx64:0.20.0")
 
+            }
+        }
+
+        val jsMain by getting {
+            dependencies {
+                implementation(kotlin("stdlib-js"))
+
+                // Coroutines
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.3.5-native-mt")
+
+                // ktor
+                implementation("io.ktor:ktor-client-js:1.3.2")
+                implementation("io.ktor:ktor-client-json-js:1.3.2")
+                implementation("io.ktor:ktor-client-logging-js:1.3.2")
+                implementation("io.ktor:ktor-client-serialization-js:1.3.2")
+
+                // Serialize
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:0.20.0")
             }
         }
     }

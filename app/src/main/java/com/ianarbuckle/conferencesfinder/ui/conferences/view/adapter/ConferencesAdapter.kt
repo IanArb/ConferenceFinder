@@ -45,7 +45,7 @@ class ConferencesAdapter(private val conferences: List<Conference>) : RecyclerVi
                 itemView.location.text = locationFormat
             }
 
-            val dateFormat = dateFormat("yyyy-MM-dd")
+            val dateFormat = dateFormat("yyy    y-MM-dd")
             val parseStartDate = LocalDate.parse(startDate, dateFormat)
             itemView.dates.text = parseStartDate.toString()
         }
