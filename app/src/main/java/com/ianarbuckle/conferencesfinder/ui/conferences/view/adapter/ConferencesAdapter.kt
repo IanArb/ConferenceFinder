@@ -38,12 +38,8 @@ class ConferencesAdapter(private val conferences: List<Conference>) : RecyclerVi
             itemView.banner.provideImage(itemView.context, conference.logoUrl)
             itemView.title.text = conference.name
 
-            if (name.isEmpty() || city.isEmpty()) {
-                itemView.location.text = "Virtual"
-            } else {
-                val locationFormat = itemView.context.getString(R.string.location_format, name, city)
-                itemView.location.text = locationFormat
-            }
+            val locationFormat = itemView.context.getString(R.string.location_format, name, city)
+            itemView.location.text = locationFormat
 
             val dateFormat = dateFormat("yyyy-MM-dd")
             val parseStartDate = LocalDate.parse(startDate, dateFormat)
