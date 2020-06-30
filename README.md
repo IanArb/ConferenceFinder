@@ -4,7 +4,7 @@ An example usage of kotlin multiplatform with Android, iOS and Web supported by 
 
 The applications displays a list of conferences retrieved from the backend. 
 
-Content for conferences inspired from https://androidstudygroup.github.io/conferences/
+Content for conferences retrieved from https://androidstudygroup.github.io/conferences/
 
 Inspired by [John Reilly's](https://github.com/joreilly) starter pack (https://github.com/joreilly/PeopleInSpace)
 
