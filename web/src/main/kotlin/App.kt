@@ -63,12 +63,36 @@ val App = functionalComponent<RProps> {
                                 h5("card-title") {
                                     +item.name
                                 }
-                                p("card-text") {
-                                    +"${item.location.country.name}, ${item.location.country.city}"
+
+                                div {
+                                    i("fas fa-location-arrow") {
+
+                                    }
+                                    p("card-text") {
+                                        attrs {
+                                            style = js {
+                                                display = "inline-block"
+                                                marginLeft = "8px"
+                                            }
+                                        }
+                                        +"${item.location.country.name}, ${item.location.country.city}"
+                                    }
                                 }
-                                p("card-text") {
-                                    +item.dates.startDate
+                                div("card-text") {
+                                    i("fas fa-calendar-day") {
+
+                                    }
+                                    p {
+                                        attrs {
+                                            style = js {
+                                                display = "inline-block"
+                                                marginLeft = "8px"
+                                            }
+                                        }
+                                        +item.dates.startDate
+                                    }
                                 }
+
                                 p("card-text") {
                                     attrs {
                                         style = js {
