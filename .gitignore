@@ -21,3 +21,4 @@ gradle-app.setting
 .DS_Store
 /build
 /captures
+/web/build
