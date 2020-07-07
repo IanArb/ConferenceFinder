@@ -3,17 +3,21 @@ package com.ianarbuckle.conferencesfinder.ui.conferences.view
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ianarbuckle.conferencesfinder.R
+import com.ianarbuckle.conferencesfinder.ui.conferences.ConferencesFragmentDirections
 import com.ianarbuckle.conferencesfinder.ui.conferences.view.adapter.ConferencesAdapter
 import conferences.model.Conference
 import kotlinx.android.synthetic.main.main_fragment.view.*
+import kotlin.properties.Delegates
 
-class ConferencesView constructor(context: Context, attrs: AttributeSet ? = null, defStyle: Int = 0) : FrameLayout(context, attrs, defStyle) {
+class ConferencesView @JvmOverloads constructor(context: Context, attrs: AttributeSet ? = null, defStyle: Int = 0) : FrameLayout(context, attrs, defStyle) {
+
+    private var conferencesAdapter: ConferencesAdapter by Delegates.notNull()
 
     init {
         inflate(context, R.layout.main_fragment, this)
@@ -22,7 +26,8 @@ class ConferencesView constructor(context: Context, attrs: AttributeSet ? = null
     fun initAdapter(conferences: List<Conference>) {
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = ConferencesAdapter(conferences)
+            conferencesAdapter = ConferencesAdapter(conferences)
+            adapter = conferencesAdapter
         }
     }
 
@@ -36,6 +41,13 @@ class ConferencesView constructor(context: Context, attrs: AttributeSet ? = null
 
     fun showError() {
         Toast.makeText(context, "Error processing request", Toast.LENGTH_SHORT).show()
+    }
+
+    fun onItemClick() {
+        conferencesAdapter.onItemClickListener {
+            val action = ConferencesFragmentDirections.actionHomeFragmentToDetailFragment(it)
+            this.findNavController().navigate(action)
+        }
     }
 
 

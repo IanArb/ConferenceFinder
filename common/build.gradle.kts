@@ -2,6 +2,7 @@ plugins {
     kotlin("multiplatform")
     id("kotlinx-serialization")
     id("com.android.library")
+    id("kotlin-android-extensions")
     id("org.jetbrains.kotlin.native.cocoapods")
 }
 
@@ -140,6 +141,8 @@ kotlin {
                 // Serialize
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.20.0")
 
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0")
+
             }
         }
 
@@ -192,6 +195,8 @@ kotlin {
 
                 // Serialize
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:0.20.0")
+
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0")
             }
         }
     }

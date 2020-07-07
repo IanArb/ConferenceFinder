@@ -2,6 +2,9 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
+apply plugin: "androidx.navigation.safeargs.kotlin"
+apply plugin: 'kotlinx-serialization'
 
 android {
     compileSdkVersion 29
@@ -26,8 +29,17 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8
     }
 
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    def googleMapApiKey = properties.getProperty('google.map.key')
+
     buildTypes {
+        debug {
+            resValue("string", "google_maps_key", googleMapApiKey)
+            minifyEnabled false
+        }
         release {
+            resValue("string", "google_maps_key", googleMapApiKey)
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -35,6 +47,9 @@ android {
 
     packagingOptions {
         exclude 'META-INF/*.kotlin_module'
+    }
+
+    android {
     }
 
 
@@ -67,11 +82,26 @@ dependencies {
     implementation 'com.google.dagger:dagger:2.28'
     kapt 'com.google.dagger:dagger-compiler:2.28'
 
+    //Dagger - Hilt
+    implementation "com.google.dagger:hilt-android:2.28-alpha"
+    kapt "com.google.dagger:hilt-android-compiler:2.28-alpha"
+
+    //Dagger - Hilt Jetpack
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha01"
+    kapt "androidx.hilt:hilt-compiler:1.0.0-alpha01"
+
     implementation 'com.google.dagger:dagger-android:2.28'
     kapt 'com.google.dagger:dagger-android-processor:2.28'
 
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
+    implementation "androidx.navigation:navigation-fragment-ktx:2.3.0"
+    implementation "androidx.navigation:navigation-ui-ktx:2.3.0"
+
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0"
 
     implementation project(":common")
 }

@@ -15,6 +15,8 @@ import kotlinx.android.synthetic.main.conferences_item_view.view.*
 
 class ConferencesAdapter(private val conferences: List<Conference>) : RecyclerView.Adapter<ConferencesAdapter.ConferencesViewHolder>() {
 
+    private var onItemClickListener: ((Conference) -> Unit)? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConferencesAdapter.ConferencesViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.conferences_item_view, parent, false)
         return ConferencesViewHolder(view)
@@ -25,6 +27,10 @@ class ConferencesAdapter(private val conferences: List<Conference>) : RecyclerVi
     override fun onBindViewHolder(holder: ConferencesAdapter.ConferencesViewHolder, position: Int) {
         val conference = conferences[position]
         holder.bind(conference)
+    }
+
+    fun onItemClickListener(callback: (Conference) -> Unit) {
+        onItemClickListener = callback
     }
 
     inner class ConferencesViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -39,11 +45,15 @@ class ConferencesAdapter(private val conferences: List<Conference>) : RecyclerVi
             itemView.title.text = conference.name
 
             val locationFormat = itemView.context.getString(R.string.location_format, name, city)
-            itemView.location.text = locationFormat
+            itemView.venueName.text = locationFormat
 
             val dateFormat = dateFormat("yyyy-MM-dd")
             val parseStartDate = LocalDate.parse(startDate, dateFormat)
             itemView.dates.text = parseStartDate.toString()
+
+            itemView.setOnClickListener {
+                onItemClickListener?.invoke(conference)
+            }
         }
     }
 
