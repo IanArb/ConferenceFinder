@@ -4,6 +4,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: "androidx.navigation.safeargs.kotlin"
+apply plugin: 'kotlinx-serialization'
 
 android {
     compileSdkVersion 29
@@ -28,8 +29,17 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8
     }
 
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    def googleMapApiKey = properties.getProperty('google.map.key')
+
     buildTypes {
+        debug {
+            resValue("string", "google_maps_key", googleMapApiKey)
+            minifyEnabled false
+        }
         release {
+            resValue("string", "google_maps_key", googleMapApiKey)
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -37,6 +47,9 @@ android {
 
     packagingOptions {
         exclude 'META-INF/*.kotlin_module'
+    }
+
+    android {
     }
 
 
@@ -85,6 +98,10 @@ dependencies {
 
     implementation "androidx.navigation:navigation-fragment-ktx:2.3.0"
     implementation "androidx.navigation:navigation-ui-ktx:2.3.0"
+
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0"
 
     implementation project(":common")
 }

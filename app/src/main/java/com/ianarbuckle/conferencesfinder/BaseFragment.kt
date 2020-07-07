@@ -1,14 +1,18 @@
 package com.ianarbuckle.conferencesfinder
 
-import android.widget.Toolbar
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.google.android.material.appbar.MaterialToolbar
 
 open class BaseFragment : Fragment() {
 
-    fun toolbar(@DrawableRes drawableResId: Int) {
-        requireActivity().findViewById<Toolbar>(R.id.toolbar).logo = if (drawableResId != 0) {
+    fun toolbar(@DrawableRes drawableResId: Int, toolbarTitle: String? = null) {
+        val toolbar = requireActivity().findViewById<MaterialToolbar>(R.id.toolbar)
+        if (!toolbarTitle.isNullOrEmpty()) {
+            toolbar.title = toolbarTitle
+        }
+        toolbar.navigationIcon = if (drawableResId != 0) {
             ContextCompat.getDrawable(requireContext(), drawableResId)
         } else {
             null

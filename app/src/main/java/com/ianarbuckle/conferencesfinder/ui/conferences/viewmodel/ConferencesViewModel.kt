@@ -12,7 +12,6 @@ import conferences.utils.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 class ConferencesViewModel @ViewModelInject constructor(private val useCase: ConferencesUseCase) : ViewModel() {
 
