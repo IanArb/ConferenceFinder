@@ -19,7 +19,7 @@ You can run the Android sample app by selecting app with your Run/Debug configur
 To enable the google maps view you'll need to add your own google maps API in your local.properties file in the root of your project as follows:
 
 ```gradle
-sdk.dir=/Users/ianarbuckle/Library/Android/sdk
+sdk.dir= YOUR_SDK_DIR
 google.map.key = YOUR_API_KEY
 ```
 
