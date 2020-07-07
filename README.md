@@ -16,7 +16,7 @@ This project can be used with IntelliJ Ultimate edition, Android Studio 4+ and X
 ### Android
 You can run the Android sample app by selecting app with your Run/Debug configurations deployed to emulator or physical device.
 
-To enable the google maps view you'll need to add your own google maps API in your local.properties file in the root of your project as follows:
+To enable the google maps view you'll need to add your own google maps API key in your local.properties file in the root of your project as follows:
 
 ```gradle
 sdk.dir= YOUR_SDK_DIR
