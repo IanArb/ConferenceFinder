@@ -4,8 +4,10 @@ import kotlinx.serialization.Serializable
 
 expect interface Parcelable
 
+@OptIn(ExperimentalMultiplatform::class)
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.BINARY)
+@OptionalExpectation
 expect annotation class Parcelize()
 
 @Parcelize
