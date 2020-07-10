@@ -1,23 +1,15 @@
 package com.ianarbuckle.conferencesapi.service
 
-import com.ianarbuckle.conferencesapi.Constants
 import com.ianarbuckle.conferencesapi.models.Conference
-import com.ianarbuckle.conferencesapi.mongo.MongoBuilder
-import com.mongodb.client.model.InsertOneOptions
+import com.ianarbuckle.conferencesapi.repository.ConferenceRepository
+import org.litote.kmongo.coroutine.CoroutineClient
 
-class ConferenceService {
+class ConferenceService(private val repository: ConferenceRepository) {
 
-    suspend fun findAll(): List<Conference> {
-        return MongoBuilder.mongoCoroutineClient().getDatabase(Constants.DATABASE_NAME)
-            .getCollection<Conference>(Constants.COLLECTION_NAME)
-            .find()
-            .toList()
-    }
+    suspend fun findAll(coroutineClient: CoroutineClient): List<Conference> = repository.findAllConferences(coroutineClient)
 
-    suspend fun insertEntity(request: Conference) {
-        MongoBuilder.mongoCoroutineClient().getDatabase(Constants.DATABASE_NAME)
-            .getCollection<Conference>(Constants.COLLECTION_NAME)
-            .insertOne(request, InsertOneOptions())
+    suspend fun insertEntity(request: Conference, coroutineClient: CoroutineClient) {
+        repository.insertConference(request, coroutineClient)
     }
 
 }

@@ -1,8 +1,9 @@
 package com.ianarbuckle.conferencesapi
 
 import com.fasterxml.jackson.databind.SerializationFeature
-import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.ianarbuckle.conferencesapi.controller.conferenceRoutes
+import com.ianarbuckle.conferencesapi.di.appModule
+import com.ianarbuckle.conferencesapi.service.ConferenceService
 import io.ktor.application.*
 import io.ktor.features.CORS
 import io.ktor.features.ContentNegotiation
@@ -12,6 +13,10 @@ import io.ktor.routing.routing
 import io.ktor.server.engine.commandLineEnvironment
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
+import org.koin.core.parameter.parametersOf
+import org.koin.ktor.ext.Koin
+import org.koin.ktor.ext.inject
+import org.litote.kmongo.coroutine.CoroutineClient
 
 fun main(args: Array<String>) {
     embeddedServer(Netty, commandLineEnvironment(args)).start(wait = true)
@@ -32,11 +37,23 @@ fun Application.module(testing: Boolean = false) {
         method(HttpMethod.Put)
         method(HttpMethod.Delete)
         method(HttpMethod.Patch)
-        anyHost()
+        anyHost() //TODO Don't do this in production
+    }
+
+    install(Koin) {
+        modules(appModule)
+    }
+
+    val service: ConferenceService by inject()
+
+    val uri = environment.config.property("ktor.mongoUri").getString()
+
+    val coroutineClient: CoroutineClient by inject {
+        parametersOf(uri)
     }
 
     routing {
-        conferenceRoutes()
+        conferenceRoutes(service, coroutineClient)
     }
 
 }
