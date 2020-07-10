@@ -13,7 +13,7 @@ class ConferencesRepository {
 
     private val conferencesApi = ConferencesApi()
 
-    suspend fun conferences(): Result<List<Conference>> {
+    private suspend fun conferences(): Result<List<Conference>> {
         val result = conferencesApi.fetchConferences()
 
         return when {
