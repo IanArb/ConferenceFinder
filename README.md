@@ -14,7 +14,7 @@ This repository accepts pull requests and all contributions are welcome!
 This project can be used with IntelliJ Ultimate edition, Android Studio 4+ and XCode v11.3+ for iOS.
 
 ### Android
-You can run the Android sample app by selecting app with your Run/Debug configurations deployed to emulator or physical device.
+You can run the Android sample app with your Run/Debug configurations deployed to emulator or physical device.
 
 To enable the google maps view you'll need to add your own google maps API key in your local.properties file in the root of your project as follows:
 
@@ -24,6 +24,12 @@ google.map.key = YOUR_API_KEY
 ```
 
 Instructions to get an API key can be found [here](https://developers.google.com/maps/documentation/android-sdk/get-api-key)
+
+Then re-sync the gradle project and build the project.
+
+```gradle
+./gradlew build
+```
 
 ### iOS
 You will need XCode v11.3+ installed and will need to target iOS 13. SwiftUI only supports iOS 13 and above.
