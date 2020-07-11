@@ -32,7 +32,9 @@ Then re-sync the gradle project and build the project.
 ```
 
 ### iOS
-You will need XCode v11.3+ installed and will need to target iOS 13. SwiftUI only supports iOS 13 and above.
+You will need Xcode v11.3+ installed and will need to target iOS 13. SwiftUI only supports iOS 13 and above.
+
+In Xcode open the iOSApp xcworkspace and build the app. The common library will be imported as a framework. 
 
 ### Web
 You can simply run the following command to execute the Kotlin react/js app on localhost port 8080.
@@ -44,7 +46,7 @@ You can simply run the following command to execute the Kotlin react/js app on l
 ### Ktor
 You need to add Run/Debug configuration to Edit Configurations targetting main class ```com.ianarbuckle.conferencesapi.ApplicationKt```
 
-You can configure your port in the ``application.conf`` file 
+You can configure your port and your mongo URI in the ``application.conf`` file 
 
 ```
 ktor {
@@ -54,7 +56,16 @@ ktor {
     application {
         modules = [ com.ianarbuckle.conferencesapi.ApplicationKt.module ]
     }
+    mongoUri = ${MONGO_URI}
 }
+```
+
+You can either setup your own MongoDB host or use a cloud host [MongoDB Altas](https://www.mongodb.com/cloud/atlas)
+
+Once you get your URI you can export it on your local machine or via IntelliJ in your run configurations
+
+```
+export MONGO_URI=YOUR_URI_HERE
 ```
 
 #### Languages, libraries and tools used
