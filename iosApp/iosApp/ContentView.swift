@@ -16,8 +16,9 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            List(viewModel.conference, id: \.name) { conference in
-                PersonView(conference: conference)
+            List(viewModel.conference, id: \.name) {
+                conference in
+                ConferenceView(conference: conference)
             }
             .navigationBarTitle(Text("Conferences"), displayMode: .large)
             .onAppear(perform: {
@@ -29,7 +30,7 @@ struct ContentView: View {
 }
 
 @available(iOS 13.0, *)
-struct PersonView : View {
+struct ConferenceView : View {
     var conference: Conference
   
     var body: some View {
@@ -82,6 +83,10 @@ struct PersonView : View {
                )
                .padding([.top, .horizontal])
     }
+}
+
+struct ConferenceDetailView: View {
+    
 }
 
 @available(iOS 13.0.0, *)
