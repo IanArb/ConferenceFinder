@@ -85,10 +85,6 @@ struct ConferenceView : View {
     }
 }
 
-struct ConferenceDetailView: View {
-    
-}
-
 @available(iOS 13.0.0, *)
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
