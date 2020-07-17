@@ -1,11 +1,16 @@
 import conferences.model.Conference
 import conferences.utils.Result
+import css.ComponentStyles
 import react.*
 import react.dom.*
 import kotlinx.coroutines.*
 import kotlinx.html.style
 import kotlinext.js.js
+import kotlinx.css.*
 import kotlinx.html.DIV
+import styled.css
+import styled.styledDiv
+import styled.styledP
 
 val App = functionalComponent<RProps> {
     val appDependencies = useContext(AppDependenciesContext)
@@ -29,7 +34,7 @@ val App = functionalComponent<RProps> {
     div {
         nav("navbar navbar-light bg-light") {
             span("navbar-brand mb-0 h1") {
-                +"Conferences"
+                +"Co    nferences"
             }
         }
         buildContainer(conference)
@@ -40,9 +45,9 @@ val App = functionalComponent<RProps> {
 @Suppress("UnsafeCastFromDynamic")
 private fun RDOMBuilder<DIV>.buildContainer(conference: List<Conference>) {
     div("container") {
-        attrs {
-            style = js {
-                marginTop = "16px"
+        styledDiv {
+            css {
+                marginTop = LinearDimension("20px")
             }
         }
         buildRows(conference)
@@ -65,21 +70,23 @@ private fun RDOMBuilder<DIV>.buildColumns(item: Conference): ReactElement {
 
 @Suppress("UnsafeCastFromDynamic")
 private fun RDOMBuilder<DIV>.buildCard(item: Conference) {
-    div("card") {
-        attrs {
-            style = js {
-                width = "18rem"
-                marginBottom = "24px"
-            }
+    styledDiv {
+        css {
+            width = LinearDimension("18rem")
+            marginBottom = LinearDimension("20px")
         }
-        buildImage(item)
+        div("card") {
+            buildImage(item)
 
-        buildCardBody(item)
+            buildCardBody(item)
+        }
     }
+
 }
 
 @Suppress("UnsafeCastFromDynamic")
 private fun RDOMBuilder<DIV>.buildImage(item: Conference) {
+    //TODO Investigate how to inject the url in styledImg
     img("card-img-top") {
         attrs.src = item.logoUrl
         attrs {
@@ -102,38 +109,38 @@ private fun RDOMBuilder<DIV>.buildCardBody(item: Conference) {
             i("fas fa-location-arrow") {
 
             }
-            p("card-text") {
-                attrs {
-                    style = js {
-                        display = "inline-block"
-                        marginLeft = "8px"
-                    }
+            styledP {
+                css {
+                    +ComponentStyles.paragraphWrapper
                 }
-                +"${item.location.country.name}, ${item.location.country.city}"
+                p("card-text") {
+                    +"${item.location.country.name}, ${item.location.country.city}"
+                }
             }
+
         }
         div("card-text") {
             i("fas fa-calendar-day") {
 
             }
-            p {
-                attrs {
-                    style = js {
-                        display = "inline-block"
-                        marginLeft = "8px"
-                    }
+            styledP {
+                css {
+                    +ComponentStyles.paragraphWrapper
                 }
-                +item.dates.startDate
+                p {
+                    +item.dates.startDate
+                }
             }
         }
 
-        p("card-text") {
-            attrs {
-                style = js {
-                    color = "green"
-                }
+        styledP {
+            css {
+                color = Color.green
             }
-            +item.status
+            p("card-text") {
+                +item.status
+            }
         }
+
     }
 }

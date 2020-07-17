@@ -15,7 +15,7 @@ val AppDependenciesContext = createContext<AppDependencies>()
 fun main() {
     render(document.getElementById("root")) {
         AppDependenciesContext.Provider(AppDependencies) {
-            child(functionalComponent = App)
+            child(App)
         }
     }
 }
