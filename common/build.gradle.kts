@@ -62,22 +62,22 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 // Kotlin
-                implementation("org.jetbrains.kotlin:kotlin-stdlib-common:1.3.71")
+                implementation("org.jetbrains.kotlin:kotlin-stdlib-common:${Versions.kotlinVersion}")
 
                 // Coroutines
                 //Support kotlin/native blocking
                 // Issue tracker: https://github.com/Kotlin/kotlinx.coroutines/issues/462
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.3.5-native-mt")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:${Versions.coroutinesVersion}")
 
                 // Ktor
-                implementation("io.ktor:ktor-client-core:1.3.2")
-                implementation("io.ktor:ktor-client-json:1.3.2")
-                implementation("io.ktor:ktor-client-logging:1.3.2")
-                implementation("io.ktor:ktor-client-serialization:1.3.2")
-                implementation("io.ktor:ktor-serialization:1.3.2")
+                implementation("io.ktor:ktor-client-core:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-client-json:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-client-logging:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-client-serialization:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-serialization:${Versions.ktorVersion}")
 
                 // Serialize
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:0.20.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:${Versions.kotlinxSerializationVersion}")
 
             }
         }
@@ -85,44 +85,41 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 // Kotlin
-                implementation("org.jetbrains.kotlin:kotlin-stdlib:1.3.71")
+                implementation("org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlinVersion}")
 
                 // Ktor
-                implementation("io.ktor:ktor-client-android:1.3.2")
-                implementation("io.ktor:ktor-client-core-jvm:1.3.2")
-                implementation("io.ktor:ktor-client-json-jvm:1.3.2")
-                implementation("io.ktor:ktor-client-logging-jvm:1.3.2")
-                implementation("io.ktor:ktor-client-serialization-jvm:1.3.2")
+                implementation("io.ktor:ktor-client-android:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-client-core-jvm:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-client-json-jvm:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-client-logging-jvm:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-client-serialization-jvm:${Versions.ktorVersion}")
 
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:${Versions.kotlinxSerializationVersion}")
 
                 // Coroutines
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.7")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutinesAndroidVersion}")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutinesAndroidVersion}")
             }
         }
 
         val jvmMain by getting {
             dependencies {
                 // Kotlin
-                implementation("org.jetbrains.kotlin:kotlin-stdlib:1.3.71")
+                implementation("org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlinVersion}")
 
                 // Coroutines
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7")
 
                 // Ktor
-                implementation("io.ktor:ktor-server-core:1.3.2")
-
-                implementation("io.ktor:ktor-client-core-jvm:1.3.2")
-                implementation("io.ktor:ktor-client-json-jvm:1.3.2")
-                implementation("io.ktor:ktor-client-logging-jvm:1.3.2")
-                implementation("io.ktor:ktor-client-serialization-jvm:1.3.2")
-                implementation("io.ktor:ktor-client-apache:1.3.2")
-//                implementation(Ktor.slf4j)
-
+                implementation("io.ktor:ktor-server-core:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-client-core-jvm:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-client-json-jvm:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-client-logging-jvm:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-client-serialization-jvm:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-client-apache:${Versions.ktorVersion}")
 
                 // Serialize
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:${Versions.kotlinxSerializationVersion}")
 
             }
         }
@@ -130,18 +127,18 @@ kotlin {
         val iOSMain by getting {
             dependencies {
 
-                implementation("io.ktor:ktor-client-ios:1.3.2")
-                implementation("io.ktor:ktor-client-core-native:1.3.2")
-                implementation("io.ktor:ktor-client-json-native:1.3.2")
-                implementation("io.ktor:ktor-client-logging-native:1.3.2")
-                implementation("io.ktor:ktor-client-serialization-native:1.3.2")
+                implementation("io.ktor:ktor-client-ios:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-client-core-native:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-client-json-native:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-client-logging-native:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-client-serialization-native:${Versions.ktorVersion}")
 
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:1.3.5-native-mt")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:${Versions.coroutinesVersion}")
 
                 // Serialize
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.20.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:${Versions.kotlinxSerializationVersion}")
 
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:${Versions.kotlinxSerializationVersion}")
 
             }
         }
@@ -149,14 +146,14 @@ kotlin {
         val watchMain by getting {
             dependencies {
 
-                implementation("io.ktor:ktor-client-ios:1.3.2")
-                implementation("io.ktor:ktor-client-core-native:1.3.2")
-                implementation("io.ktor:ktor-client-json-native:1.3.2")
-                implementation("io.ktor:ktor-client-logging-native:1.3.2")
-                implementation("io.ktor:ktor-client-serialization-native:1.3.2")
+                implementation("io.ktor:ktor-client-ios:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-client-core-native:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-client-json-native:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-client-logging-native:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-client-serialization-native:${Versions.ktorVersion}")
 
                 // Serialize
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.20.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:${Versions.kotlinxSerializationVersion}")
 
             }
         }
@@ -164,18 +161,18 @@ kotlin {
         val macOSMain by getting {
             dependencies {
                 // Coroutines
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-macosx64:1.3.2")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-macosx64:${Versions.coroutinesVersion}")
 
 
                 // Ktor
-                implementation("io.ktor:ktor-client-curl:1.3.2")
-                implementation("io.ktor:ktor-client-core-macosx64:1.3.2")
-                implementation("io.ktor:ktor-client-json-macosx64:1.3.2")
-                implementation("io.ktor:ktor-client-logging-macosx64:1.3.2")
-                implementation("io.ktor:ktor-client-serialization-macosx64:1.3.2")
+                implementation("io.ktor:ktor-client-curl:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-client-core-macosx64:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-client-json-macosx64:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-client-logging-macosx64:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-client-serialization-macosx64:${Versions.ktorVersion}")
 
                 // Serialize
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-macosx64:0.20.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-macosx64:${Versions.kotlinxSerializationVersion}")
 
             }
         }
@@ -185,18 +182,18 @@ kotlin {
                 implementation(kotlin("stdlib-js"))
 
                 // Coroutines
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.3.5-native-mt")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:${Versions.coroutinesVersion}")
 
                 // ktor
-                implementation("io.ktor:ktor-client-js:1.3.2")
-                implementation("io.ktor:ktor-client-json-js:1.3.2")
-                implementation("io.ktor:ktor-client-logging-js:1.3.2")
-                implementation("io.ktor:ktor-client-serialization-js:1.3.2")
+                implementation("io.ktor:ktor-client-js:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-client-json-js:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-client-logging-js:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-client-serialization-js:${Versions.ktorVersion}")
 
                 // Serialize
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:0.20.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:${Versions.kotlinxSerializationVersion}")
 
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:${Versions.kotlinxSerializationVersion}")
             }
         }
     }

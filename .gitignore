@@ -22,3 +22,6 @@ gradle-app.setting
 /build
 /captures
 /web/build
+/buildSrc/build
+/iosApp/iosApp.xcodeproj/project.xcworkspace/xcuserdata
+/iosApp/iosApp.xcworkspace/xcshareddata

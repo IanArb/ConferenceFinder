@@ -5,12 +5,12 @@ buildscript {
         maven("https://plugins.gradle.org/m2/")
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:3.6.3")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.72")
-        classpath("org.jetbrains.kotlin:kotlin-serialization:1.3.72")
-        classpath("com.github.jengelman.gradle.plugins:shadow:5.2.0")
-        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.3.0")
-        classpath("com.google.dagger:hilt-android-gradle-plugin:2.28-alpha")
+        classpath("com.android.tools.build:gradle:${Versions.gradleAndroidVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlinVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-serialization:${Versions.kotlinVersion}")
+        classpath("com.github.jengelman.gradle.plugins:shadow:${Versions.shadowVersion}")
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.navAndroidGradle}")
+        classpath("com.google.dagger:hilt-android-gradle-plugin:${Versions.daggerAndroidVersion}")
     }
 }
 allprojects {
