@@ -20,6 +20,11 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures {
+        // Enables Jetpack Compose for this module
+        compose true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -27,6 +32,10 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion "0.1.0-dev13"
     }
 
     Properties properties = new Properties()
@@ -68,6 +77,12 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$Versions.viewModelVersion"
     implementation "androidx.recyclerview:recyclerview:$Versions.recyclerViewVersion"
     implementation "androidx.fragment:fragment-ktx:$Versions.fragmentKtVersion"
+
+    //Compose
+    implementation "androidx.ui:ui-core:$Versions.composeVersion"
+    implementation "androidx.ui:ui-tooling:$Versions.composeVersion"
+    implementation "androidx.ui:ui-layout:$Versions.composeVersion"
+    implementation "androidx.ui:ui-material:$Versions.composeVersion"
 
     implementation "com.jakewharton.threetenabp:threetenabp:$Versions.threetenabpVersion"
 

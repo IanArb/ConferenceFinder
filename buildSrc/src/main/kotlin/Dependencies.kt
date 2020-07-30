@@ -12,7 +12,7 @@ object Versions {
     const val lifecycleVersion = "2.2.0"
     const val viewModelVersion = "2.2.0"
     const val coreVersion = "1.3.0"
-    const val hiltJetpackVersion = "1.0.0-alpha01"
+    const val hiltJetpackVersion = "1.0.0-alpha02"
 
     //Dagger
     const val daggerVersion = "2.28"
@@ -27,9 +27,10 @@ object Versions {
     const val glideVersion = "4.11.0"
     const val playServicesVersion = "17.0.0"
     const val threetenabpVersion = "1.2.4"
+    const val composeVersion = "0.1.0-dev13"
 
     //Build plugins
-    const val gradleAndroidVersion = "3.6.4"
+    const val gradleAndroidVersion = "4.0.0"
     const val shadowVersion = "5.2.0"
     const val navAndroidGradle = "2.3.0"
     const val hiltGradle = "2.28"
