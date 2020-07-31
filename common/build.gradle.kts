@@ -102,6 +102,28 @@ kotlin {
             }
         }
 
+        val jvmMain by getting {
+            dependencies {
+                // Kotlin
+                implementation("org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlinVersion}")
+
+                // Coroutines
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7")
+
+                // Ktor
+                implementation("io.ktor:ktor-server-core:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-client-core-jvm:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-client-json-jvm:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-client-logging-jvm:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-client-serialization-jvm:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-client-apache:${Versions.ktorVersion}")
+
+                // Serialize
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:${Versions.kotlinxSerializationVersion}")
+
+            }
+        }
+
         val iOSMain by getting {
             dependencies {
 
@@ -136,12 +158,31 @@ kotlin {
             }
         }
 
+        val macOSMain by getting {
+            dependencies {
+                // Coroutines
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-macosx64:${Versions.coroutinesVersion}")
+
+
+                // Ktor
+                implementation("io.ktor:ktor-client-curl:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-client-core-macosx64:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-client-json-macosx64:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-client-logging-macosx64:${Versions.ktorVersion}")
+                implementation("io.ktor:ktor-client-serialization-macosx64:${Versions.ktorVersion}")
+
+                // Serialize
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-macosx64:${Versions.kotlinxSerializationVersion}")
+
+            }
+        }
+
         val jsMain by getting {
             dependencies {
                 implementation(kotlin("stdlib-js"))
 
                 // Coroutines
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:${Versions.coroutinesAndroidVersion}")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:${Versions.coroutinesVersion}")
 
                 // ktor
                 implementation("io.ktor:ktor-client-js:${Versions.ktorVersion}")
