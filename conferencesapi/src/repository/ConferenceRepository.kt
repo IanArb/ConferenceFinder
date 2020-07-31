@@ -8,14 +8,26 @@ import org.litote.kmongo.coroutine.CoroutineClient
 class ConferenceRepository {
 
     suspend fun insertConference(request: Conference, coroutineClient: CoroutineClient) {
-        coroutineClient.getDatabase(Constants.DATABASE_NAME)
-            .getCollection<Conference>(Constants.COLLECTION_NAME)
-            .insertOne(request, InsertOneOptions())
+        coroutineCollection(coroutineClient)
+            .insertOne(request)
     }
 
     suspend fun findAllConferences(coroutineClient: CoroutineClient): List<Conference> =
-        coroutineClient.getDatabase(Constants.DATABASE_NAME)
-            .getCollection<Conference>(Constants.COLLECTION_NAME)
+        coroutineCollection(coroutineClient)
             .find()
             .toList()
+
+    suspend fun findOneConference(id: String, coroutineClient: CoroutineClient): Conference? =
+        coroutineCollection(coroutineClient)
+            .findOneById(id)
+
+    suspend fun deleteConference(id: String, coroutineClient: CoroutineClient) {
+        coroutineCollection(coroutineClient)
+            .deleteOneById(id)
+    }
+
+    private fun coroutineCollection(coroutineClient: CoroutineClient) =
+        coroutineClient.getDatabase(Constants.DATABASE_NAME)
+            .getCollection<Conference>(Constants.COLLECTION_NAME_V2)
+
 }

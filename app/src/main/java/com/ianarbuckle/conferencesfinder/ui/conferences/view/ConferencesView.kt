@@ -3,7 +3,6 @@ package com.ianarbuckle.conferencesfinder.ui.conferences.view
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
-import android.widget.Toast
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.navigation.findNavController
@@ -40,13 +39,23 @@ class ConferencesView @JvmOverloads constructor(context: Context, attrs: Attribu
     }
 
     fun showError() {
-        Toast.makeText(context, "Error processing request", Toast.LENGTH_SHORT).show()
+        errorView.isVisible = true
+    }
+
+    fun hideError() {
+        errorView.isGone = true
+    }
+
+    fun onTryAgain(callback: () -> Unit) {
+        errorView.tryAgainButtonCallback {
+            callback()
+        }
     }
 
     fun onItemClick() {
         conferencesAdapter.onItemClickListener {
             val action = ConferencesFragmentDirections.actionHomeFragmentToDetailFragment(it)
-            this.findNavController().navigate(action)
+            findNavController().navigate(action)
         }
     }
 

@@ -40,10 +40,19 @@ class ConferencesFragment : BaseFragment() {
         viewModel.conferencesObservable.observe(viewLifecycleOwner, Observer {
             when {
                 it.showProgress -> view.showLoading()
-                it.showError -> view.showError()
+                it.showError -> {
+                    view.apply {
+                        hideLoading()
+                        showError()
+                        onTryAgain {
+                            viewModel.init()
+                        }
+                    }
+                }
                 !it.showSuccess.isNullOrEmpty() -> {
                     view.apply {
                         hideLoading()
+                        hideError()
                         initAdapter(it.showSuccess)
                         onItemClick()
                     }

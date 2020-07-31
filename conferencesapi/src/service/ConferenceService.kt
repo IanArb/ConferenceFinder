@@ -8,8 +8,14 @@ class ConferenceService(private val repository: ConferenceRepository) {
 
     suspend fun findAll(coroutineClient: CoroutineClient): List<Conference> = repository.findAllConferences(coroutineClient)
 
+    suspend fun findOne(id: String, coroutineClient: CoroutineClient): Conference? = repository.findOneConference(id, coroutineClient)
+
     suspend fun insertEntity(request: Conference, coroutineClient: CoroutineClient) {
         repository.insertConference(request, coroutineClient)
+    }
+
+    suspend fun deleteEntity(id: String, coroutineClient: CoroutineClient) {
+        repository.deleteConference(id, coroutineClient)
     }
 
 }

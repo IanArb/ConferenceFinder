@@ -1,11 +1,10 @@
 package com.ianarbuckle.conferencesapi.models
 
 import org.bson.codecs.pojo.annotations.BsonId
-import java.util.*
 
 data class Conference(
     @BsonId
-    val id: UUID = UUID.randomUUID(),
+    val _id: String? = null,
     val name: String,
     val logoUrl: String,
     val location: Location,

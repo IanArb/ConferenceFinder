@@ -16,6 +16,12 @@
         android:layout_gravity="center"
         tools:visibility="gone"/>
 
+    <com.ianarbuckle.conferencesfinder.ui.view.ErrorView
+        android:id="@+id/errorView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
