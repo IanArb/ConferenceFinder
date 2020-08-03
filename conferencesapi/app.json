@@ -1,0 +1,5 @@
+{
+  "name": "Conferences Ktor App",
+  "description": "Ktor application with MongoDB",
+  "image": "heroku/java"
+}
