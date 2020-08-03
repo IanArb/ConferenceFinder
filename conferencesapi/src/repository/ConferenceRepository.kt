@@ -26,6 +26,13 @@ class ConferenceRepository {
             .deleteOneById(id)
     }
 
+    suspend fun updateConference(requestBody: Conference?, coroutineClient: CoroutineClient) {
+        requestBody?.let {
+            coroutineCollection(coroutineClient)
+                .updateOneById(it._id!!, it)
+        }
+    }
+
     private fun coroutineCollection(coroutineClient: CoroutineClient) =
         coroutineClient.getDatabase(Constants.DATABASE_NAME)
             .getCollection<Conference>(Constants.COLLECTION_NAME_V2)

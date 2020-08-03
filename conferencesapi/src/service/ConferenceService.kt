@@ -18,4 +18,8 @@ class ConferenceService(private val repository: ConferenceRepository) {
         repository.deleteConference(id, coroutineClient)
     }
 
+    suspend fun updateEntity(requestBody: Conference?, coroutineClient: CoroutineClient) {
+        repository.updateConference(requestBody, coroutineClient)
+    }
+
 }

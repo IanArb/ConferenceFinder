@@ -4,6 +4,7 @@ import com.ianarbuckle.conferencesapi.models.Conference
 import com.ianarbuckle.conferencesapi.service.ConferenceService
 import io.ktor.application.call
 import io.ktor.http.HttpStatusCode
+import io.ktor.request.*
 import io.ktor.response.respond
 import io.ktor.routing.*
 import org.litote.kmongo.coroutine.CoroutineClient
@@ -18,9 +19,13 @@ fun Route.conferenceRoutes(service: ConferenceService, coroutineClient: Coroutin
         }
 
         get("/{id}") {
-            service.findOne(call.parameters["id"]!!, coroutineClient)?.let { conference ->
-                call.respond(HttpStatusCode.OK, conference
-                )
+            val id = call.parameters["id"]
+            id?.let {
+                service.findOne(id, coroutineClient)?.let { conference ->
+                    call.respond(
+                        HttpStatusCode.OK, conference
+                    )
+                }
             }
         }
 
@@ -30,8 +35,16 @@ fun Route.conferenceRoutes(service: ConferenceService, coroutineClient: Coroutin
             call.respond(HttpStatusCode.Created)
         }
 
+        put("") {
+            val requestBody = call.receiveOrNull<Conference>()
+            call.respond(HttpStatusCode.OK, service.updateEntity(requestBody, coroutineClient))
+        }
+
         delete("/{id}") {
-            call.respond(HttpStatusCode.OK, service.deleteEntity(call.parameters["id"]!!, coroutineClient))
+            val id = call.parameters["id"]
+            id?.let {
+                call.respond(HttpStatusCode.OK, service.deleteEntity(call.parameters["id"]!!, coroutineClient))
+            }
         }
 
     }
