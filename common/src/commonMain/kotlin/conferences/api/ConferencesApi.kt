@@ -11,12 +11,12 @@ import io.ktor.client.request.header
 
 class ConferencesApi {
 
-    private val baseUrl = "http://35.205.203.3"
+    private val baseUrl = "https://conferences-web-api.herokuapp.com"
 
     private val client by lazy {
         HttpClient {
             install(JsonFeature) {
-                serializer = KotlinxSerializer(Json(JsonConfiguration()))
+                serializer = KotlinxSerializer(Json(JsonConfiguration(ignoreUnknownKeys = true)))
             }
         }
     }

@@ -2,9 +2,7 @@
 
 An example usage of kotlin multiplatform with Android, iOS and Web supported by a Ktor backend. 
 
-The applications displays a list of conferences retrieved from the backend. 
-
-Content for conferences retrieved from https://androidstudygroup.github.io/conferences/
+The applications displays a list of conferences retrieved from the backend (https://github.com/IanArb/conferencesKtor). 
 
 Inspired by [John Reilly's](https://github.com/joreilly) starter pack (https://github.com/joreilly/PeopleInSpace)
 
@@ -42,23 +40,6 @@ You can simply run the following command to execute the Kotlin react/js app on l
 ./gradlew :web:browserDevelopmentRun --continuous
 ```
 --continuous flag enables react hot reload for code changes. 
-
-### Ktor
-You need to add Run/Debug configuration to Edit Configurations targetting main class ```com.ianarbuckle.conferencesapi.ApplicationKt```
-
-You can configure your port and your mongo URI in the ``application.conf`` file 
-
-```
-ktor {
-    deployment {
-        port = 8080
-    }
-    application {
-        modules = [ com.ianarbuckle.conferencesapi.ApplicationKt.module ]
-    }
-    mongoUri = ${MONGO_URI}
-}
-```
 
 You can either setup your own MongoDB host or use a cloud host [MongoDB Altas](https://www.mongodb.com/cloud/atlas)
 

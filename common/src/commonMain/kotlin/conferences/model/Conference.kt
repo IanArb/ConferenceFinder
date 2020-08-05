@@ -1,5 +1,6 @@
 package conferences.model
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 expect interface Parcelable
@@ -13,6 +14,7 @@ expect annotation class Parcelize()
 @Parcelize
 @Serializable
 data class Conference(
+    @SerialName("_id")
     val id: String,
     val name: String,
     val logoUrl: String,
