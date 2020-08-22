@@ -2,10 +2,11 @@ buildscript {
     repositories {
         google()
         jcenter()
-        maven("https://plugins.gradle.org/m2/")
+        maven("https://dl.bintray.com/kotlin/kotlin-eap")
+        maven("https://kotlin.bintray.com/kotlinx")
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:4.0.0")
+        classpath("com.android.tools.build:gradle:4.0.1")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlinVersion}")
         classpath("org.jetbrains.kotlin:kotlin-serialization:${Versions.kotlinVersion}")
         classpath("com.github.jengelman.gradle.plugins:shadow:${Versions.shadowVersion}")
@@ -18,6 +19,7 @@ allprojects {
         google()
         jcenter()
         mavenCentral()
-        maven("https://kotlin.bintray.com/kotlin-js-wrappers/")
+        maven("https://dl.bintray.com/kotlin/kotlin-eap")
+        maven("https://kotlin.bintray.com/kotlinx")
     }
 }
