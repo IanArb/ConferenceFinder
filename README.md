@@ -41,14 +41,6 @@ You can simply run the following command to execute the Kotlin react/js app on l
 ```
 --continuous flag enables react hot reload for code changes. 
 
-You can either setup your own MongoDB host or use a cloud host [MongoDB Altas](https://www.mongodb.com/cloud/atlas)
-
-Once you get your URI you can export it on your local machine or via IntelliJ in your run configurations
-
-```
-export MONGO_URI=YOUR_URI_HERE
-```
-
 #### Languages, libraries and tools used
 * [Kotlin](https://kotlinlang.org/)
 * [Kotlin Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html)
