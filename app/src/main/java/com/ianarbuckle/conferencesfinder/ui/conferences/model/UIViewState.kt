@@ -1,9 +1,7 @@
 package com.ianarbuckle.conferencesfinder.ui.conferences.model
 
-import conferences.model.Conference
-
-data class UIViewState(
-    val showSuccess: List<Conference>?,
-    val showProgress: Boolean,
-    val showError: Boolean
-)
+sealed class UIViewState<out T: Any> {
+    data class Success<out T: Any>(val result: T): UIViewState<T>()
+    object Error: UIViewState<Nothing>()
+    object Loading: UIViewState<Nothing>()
+}

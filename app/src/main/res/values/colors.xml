@@ -9,4 +9,5 @@
     <color name="colorSnowWhite">#f8f8ff</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorGreen">#008577</color>
+    <color name="colorRed">#FF0000</color>
 </resources>

@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.ianarbuckle.conferencesfinder.ui.conferences.model.UIViewState
 import com.ianarbuckle.conferencesfinder.ui.conferences.usecase.ConferencesUseCase
 import com.ianarbuckle.conferencesfinder.utils.asLiveData
-import conferences.model.Conference
 import conferences.utils.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -15,35 +14,27 @@ import kotlinx.coroutines.withContext
 
 class ConferencesViewModel @ViewModelInject constructor(private val useCase: ConferencesUseCase) : ViewModel() {
 
-    private val mutableConferencesData = MutableLiveData<UIViewState>()
+    private val mutableConferencesData = MutableLiveData<Any>()
 
     val conferencesObservable = mutableConferencesData.asLiveData()
 
-    fun init() {
-        emitUIState(showProgress = true)
+    init {
+        emitUIState(UIViewState.Loading)
 
         viewModelScope.launch(Dispatchers.IO) {
             val result = useCase.conferences()
 
             withContext(Dispatchers.Main) {
                 if (result is Result.Success) {
-                    emitUIState(showSuccess =  result.data)
+                    emitUIState(UIViewState.Success(result.data))
                 } else {
-                    emitUIState(showError = true)
+                    emitUIState(UIViewState.Error)
                 }
             }
         }
     }
 
-    private fun emitUIState(showProgress: Boolean = false,
-                    showSuccess: List<Conference>? = null,
-                    showError: Boolean = false
-    ) {
-        val uiState = UIViewState(
-            showSuccess,
-            showProgress,
-            showError
-        )
+    private fun emitUIState(uiState: UIViewState<Any>) {
         mutableConferencesData.postValue(uiState)
     }
 }
