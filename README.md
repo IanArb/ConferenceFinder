@@ -9,7 +9,7 @@ Inspired by [John Reilly's](https://github.com/joreilly) starter pack (https://g
 This repository accepts pull requests and all contributions are welcome!
 
 ## Setup instructions
-This project can be used with IntelliJ Ultimate edition, Android Studio 4+ and XCode v11.3+ for iOS.
+This project can be used with Android Studio 4.2 Canary for Jetpack Compose and XCode v11.3+ for iOS.
 
 ### Android
 You can run the Android sample app with your Run/Debug configurations deployed to emulator or physical device.
@@ -47,9 +47,8 @@ You can simply run the following command to execute the Kotlin react/js app on l
 * [Kotlin Serialization](https://github.com/Kotlin/kotlinx.serialization)
 * [Ktor client library](https://github.com/ktorio/ktor)
 * [Kotlin JS Wrappers](https://github.com/JetBrains/kotlin-wrappers)
+* [Jetpack Compose](https://developer.android.com/jetpack/compose)
 * [Android Architecture Components](https://developer.android.com/topic/libraries/architecture/index.html)
 * [KMongo](https://github.com/Litote/kmongo)
-* [Kubernetes](https://kubernetes.io/)
 * [SwiftUI](https://developer.apple.com/documentation/swiftui)
 * [Bootstrap](https://getbootstrap.com/)
-* [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
