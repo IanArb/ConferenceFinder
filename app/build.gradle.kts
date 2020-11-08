@@ -5,7 +5,6 @@ plugins {
     kotlin("android")
     kotlin("android.extensions")
     id("kotlin-kapt")
-    id("androidx.navigation.safeargs.kotlin")
     id("dagger.hilt.android.plugin")
     id("kotlinx-serialization")
 }
@@ -59,7 +58,7 @@ android {
 
     composeOptions {
         kotlinCompilerVersion = "1.4.10"
-        kotlinCompilerExtensionVersion = "1.0.0-alpha02"
+        kotlinCompilerExtensionVersion = "1.0.0-alpha06"
     }
 
     packagingOptions {
@@ -117,8 +116,9 @@ dependencies {
     implementation("androidx.compose.foundation:foundation-layout:${Versions.composeVersion}")
     implementation("androidx.compose.material:material:${Versions.composeVersion}")
     implementation("androidx.compose.runtime:runtime-livedata:${Versions.composeVersion}")
+    implementation("androidx.navigation:navigation-compose:${Versions.navigationComposeVersion}")
 
-    implementation("dev.chrisbanes.accompanist:accompanist-coil:0.2.1")
+    implementation("dev.chrisbanes.accompanist:accompanist-coil:0.3.2")
 
 
     implementation(project(":common"))

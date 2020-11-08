@@ -18,7 +18,7 @@ fun LoadingContent() {
             .fillMaxHeight()
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.Center,
-        verticalGravity = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically
     ) {
         CircularProgressIndicator()
     }

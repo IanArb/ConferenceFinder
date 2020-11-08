@@ -8,12 +8,13 @@ object Versions {
     const val kotlinxSerializationVersion = "1.0.0-RC"
 
     //Android Architecture components
-    const val navigationVersion = "2.3.0"
+    const val navigationVersion = "2.3.1"
     const val lifecycleVersion = "2.2.0"
     const val viewModelVersion = "2.2.0"
     const val coreVersion = "1.3.1"
     const val hiltJetpackVersion = "1.0.0-alpha02"
-    const val composeVersion = "1.0.0-alpha02"
+    const val composeVersion = "1.0.0-alpha06"
+    const val navigationComposeVersion = "1.0.0-alpha01"
 
     //Dagger
     const val daggerVersion = "2.28"

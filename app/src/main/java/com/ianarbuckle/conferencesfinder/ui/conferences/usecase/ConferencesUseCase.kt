@@ -8,4 +8,6 @@ import javax.inject.Inject
 class ConferencesUseCase @Inject constructor(private val repository: ConferencesRepository) {
 
     suspend fun conferences(): Result<List<Conference>> = repository.fetchConferences()
+
+    suspend fun fetchConferenceById(id: String) = repository.fetchConferenceById(id)
 }

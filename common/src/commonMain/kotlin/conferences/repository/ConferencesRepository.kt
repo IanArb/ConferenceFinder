@@ -22,6 +22,15 @@ class ConferencesRepository {
         }
     }
 
+    private suspend fun findOneConference(id: String): Result<Conference> {
+        val result = conferencesApi.fetchConferenceById(id)
+
+        return when {
+            result.id.isNotEmpty() -> Result.Success(result)
+            else -> Result.Error(IOException("Error getting conference"))
+        }
+    }
+
     suspend fun fetchConferences() = safeApiCall(
         call = { conferences() },
         errorMessage = "Failed to retrieve conferences"
@@ -38,6 +47,11 @@ class ConferencesRepository {
             }
         }
     }
+
+    suspend fun fetchConferenceById(id: String) = safeApiCall(
+        call = { findOneConference(id) },
+        errorMessage = "Failed to get conference"
+    )
 
 
 }

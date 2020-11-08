@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.ui.tooling.preview.Preview
 import com.ianarbuckle.conferencesfinder.R
@@ -21,12 +22,12 @@ fun ErrorContent() {
         .fillMaxWidth()
         .padding(16.dp),
         horizontalArrangement = Arrangement.Center,
-        verticalGravity = Alignment.CenterVertically) {
+        verticalAlignment = Alignment.CenterVertically) {
         Column(
-            horizontalGravity = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally
         ){
             Image(
-                imageResource(id = R.drawable.ic_perm_scan_wifi_24px),
+                vectorResource(R.drawable.ic_perm_scan_wifi_24px),
                 modifier = Modifier.preferredWidthIn(250.dp, 250.dp),
                 alignment = Alignment.Center,
                 contentScale = ContentScale.Fit

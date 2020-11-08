@@ -6,6 +6,7 @@ import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.client.request.get
 import kotlinx.serialization.json.Json
 import conferences.model.Conference
+import io.ktor.http.*
 
 class ConferencesApi {
 
@@ -22,4 +23,6 @@ class ConferencesApi {
     }
 
     suspend fun fetchConferences() = client.get<List<Conference>>("$baseUrl/conferences")
+
+    suspend fun fetchConferenceById(id: String) = client.get<Conference>("$baseUrl/conferences/${id}")
 }

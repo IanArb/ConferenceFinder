@@ -6,17 +6,23 @@ import androidx.annotation.ColorRes
 import androidx.compose.foundation.Icon
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import androidx.navigation.NavController
 import androidx.ui.tooling.preview.Preview
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.MapView
@@ -25,45 +31,87 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.LatLng
 import com.ianarbuckle.conferencesfinder.R
+import com.ianarbuckle.conferencesfinder.ui.conferencedetail.viewmodel.ConferenceDetailViewModel
+import com.ianarbuckle.conferencesfinder.ui.conferences.model.UIViewState
+import com.ianarbuckle.conferencesfinder.ui.conferences.view.ErrorContent
 import com.ianarbuckle.conferencesfinder.ui.theme.ConferencesTheme
 import conferences.model.*
 import conferences.model.LatLng as ConferenceLatLng
 
 @Composable
-fun ConferenceDetailLayout(conference: Conference) {
-    Row {
-        Column {
-            VenueMapView(conference.location.venue)
-            Spacer(Modifier.preferredHeight(12.dp))
-            Column(modifier = Modifier.padding(16.dp)) {
-                Text(
-                    text = conference.location.venue.name,
-                    style = MaterialTheme.typography.h5
-                )
-                Spacer(Modifier.preferredHeight(8.dp))
-                Row {
-                    Icon(
-                        asset = Icons.Default.LocationOn
-                    )
-                    Text(
-                        modifier = Modifier.padding(start = 4.dp),
-                        text = conference.location.venue.address,
-                        style = MaterialTheme.typography.subtitle2
-                    )
-                }
-                Spacer(Modifier.preferredHeight(8.dp))
-                Row {
-                    Icon(asset = Icons.Default.Info)
-                    Text(
-                        modifier = Modifier.padding(start = 4.dp, top = 2.dp),
-                        text = conference.callForPapers.websiteUrl,
-                        style = MaterialTheme.typography.subtitle2,
-                        color = Color.Blue
-                    )
-                }
-            }
+fun ConferenceDetailScreen(id: String, viewModel: ConferenceDetailViewModel, navController: NavController) {
+    viewModel.init(id)
 
+    val observeState = viewModel.observeUiState.observeAsState()
+    val uiState = observeState.value
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                navigationIcon = {
+                    IconButton(onClick = {
+                        navController.popBackStack()
+                    }) {
+                        androidx.compose.material.Icon(
+                            asset = Icons.Filled.ArrowBack,
+                            tint = Color.White
+                        )
+                    }
+                },
+                title = {
+                    if (uiState is UIViewState.Success<*>) {
+                        val conference = uiState.result as Conference
+                        Text(text = conference.name)
+                    }
+                })
+        },
+        bodyContent = {
+            when (uiState) {
+                is UIViewState.Success<*> -> {
+                    Row {
+                        DetailScreen(uiState.result as Conference)
+                    }
+                }
+                is UIViewState.Error -> ErrorContent()
+            }
         }
+    )
+
+}
+
+@Composable
+private fun DetailScreen(conference: Conference) {
+    Column {
+        VenueMapView(conference.location.venue)
+        Spacer(Modifier.preferredHeight(12.dp))
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(
+                text = conference.location.venue.name,
+                style = MaterialTheme.typography.h5
+            )
+            Spacer(Modifier.preferredHeight(8.dp))
+            Row {
+                Icon(
+                    asset = Icons.Default.LocationOn
+                )
+                Text(
+                    modifier = Modifier.padding(start = 4.dp),
+                    text = conference.location.venue.address,
+                    style = MaterialTheme.typography.subtitle2
+                )
+            }
+            Spacer(Modifier.preferredHeight(8.dp))
+            Row {
+                Icon(asset = Icons.Default.Info)
+                Text(
+                    modifier = Modifier.padding(start = 4.dp, top = 2.dp),
+                    text = conference.callForPapers.websiteUrl,
+                    style = MaterialTheme.typography.subtitle2,
+                    color = Color.Blue
+                )
+            }
+        }
+
     }
 }
 
@@ -147,6 +195,6 @@ fun ConferenceDetailPreview() {
     )
 
     ConferencesTheme {
-        ConferenceDetailLayout(london)
+        DetailScreen(london)
     }
 }

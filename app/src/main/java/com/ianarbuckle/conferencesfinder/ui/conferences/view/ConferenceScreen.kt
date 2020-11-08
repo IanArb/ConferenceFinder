@@ -1,7 +1,5 @@
 package com.ianarbuckle.conferencesfinder.ui.conferences.view
 
-import android.content.Context
-import androidx.compose.foundation.Box
 import androidx.compose.foundation.Icon
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.clickable
@@ -20,22 +18,23 @@ import androidx.compose.ui.platform.ContextAmbient
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.navigate
 import androidx.ui.tooling.preview.Preview
 import coil.request.ImageRequest
-import com.ianarbuckle.conferencesfinder.ui.conferencedetail.launchConferenceDetailsActivity
 import com.ianarbuckle.conferencesfinder.ui.theme.ConferencesTheme
 import conferences.model.*
-import dev.chrisbanes.accompanist.coil.CoilImageWithCrossfade
+import dev.chrisbanes.accompanist.coil.CoilImage
 
 @Composable
-fun ConferenceScreen(conferences: List<Conference>, innerPadding: InnerPadding, context: Context) {
+fun ConferenceScreen(conferences: List<Conference>, innerPadding: PaddingValues, navController: NavController) {
     LazyColumnFor(
         contentPadding = innerPadding,
         modifier = Modifier.padding(16.dp),
         items = conferences
     ) { conference ->
         ConferenceCard(conference) {
-            launchConferenceDetailsActivity(context, it)
+            navController.navigate("detail/${it.id}")
         }
     }
 }
@@ -63,7 +62,8 @@ private fun ConferenceCard(conference: Conference, itemClick: (item: Conference)
 private fun BodyContent(conference: Conference) {
     Column {
         Box {
-            CoilImageWithCrossfade(
+            CoilImage(
+                fadeIn = true,
                 modifier = Modifier.preferredHeight(150.dp),
                 request = ImageRequest.Builder(ContextAmbient.current)
                     .data(conference.logoUrl)
@@ -178,6 +178,6 @@ fun ConferencesPreview() {
     )
     val conferences = listOf(london, berlin)
     ConferencesTheme {
-        ConferenceScreen(conferences, InnerPadding(16.dp), ContextAmbient.current)
+//        ConferenceScreen(conferences, PaddingValues(16.dp), ContextAmbient.current)
     }
 }
