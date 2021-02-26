@@ -1,6 +1,5 @@
 package com.ianarbuckle.conferencesfinder.ui.conferences.viewmodel
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,11 +7,14 @@ import com.ianarbuckle.conferencesfinder.ui.conferences.model.UIViewState
 import com.ianarbuckle.conferencesfinder.ui.conferences.usecase.ConferencesUseCase
 import com.ianarbuckle.conferencesfinder.utils.asLiveData
 import conferences.utils.Result
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class ConferencesViewModel @ViewModelInject constructor(private val useCase: ConferencesUseCase) : ViewModel() {
+@HiltViewModel
+class ConferencesViewModel @Inject constructor(private val useCase: ConferencesUseCase) : ViewModel() {
 
     private val mutableConferencesData = MutableLiveData<Any>()
 

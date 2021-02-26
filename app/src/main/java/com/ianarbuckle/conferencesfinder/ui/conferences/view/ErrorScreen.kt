@@ -1,17 +1,17 @@
 package com.ianarbuckle.conferencesfinder.ui.conferences.view
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.ui.tooling.preview.Preview
 import com.ianarbuckle.conferencesfinder.R
 import com.ianarbuckle.conferencesfinder.ui.theme.ConferencesTheme
 
@@ -27,10 +27,11 @@ fun ErrorContent() {
             horizontalAlignment = Alignment.CenterHorizontally
         ){
             Image(
-                vectorResource(R.drawable.ic_perm_scan_wifi_24px),
-                modifier = Modifier.preferredWidthIn(250.dp, 250.dp),
+                imageVector = ImageVector.vectorResource(id = R.drawable.ic_perm_scan_wifi_24px),
+                modifier = Modifier.size(250.dp, 250.dp),
                 alignment = Alignment.Center,
-                contentScale = ContentScale.Fit
+                contentScale = ContentScale.Fit,
+                contentDescription = "Wifi"
             )
             Text(
                 text = "Oops! Something went wrong.",

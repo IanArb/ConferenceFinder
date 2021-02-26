@@ -1,26 +1,29 @@
 package com.ianarbuckle.conferencesfinder.ui.conferences.view
 
-import androidx.compose.foundation.Icon
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumnFor
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Icon
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.ContextAmbient
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
-import androidx.ui.tooling.preview.Preview
 import coil.request.ImageRequest
 import com.ianarbuckle.conferencesfinder.ui.theme.ConferencesTheme
 import conferences.model.*
@@ -28,13 +31,14 @@ import dev.chrisbanes.accompanist.coil.CoilImage
 
 @Composable
 fun ConferenceScreen(conferences: List<Conference>, innerPadding: PaddingValues, navController: NavController) {
-    LazyColumnFor(
+    LazyColumn(
         contentPadding = innerPadding,
-        modifier = Modifier.padding(16.dp),
-        items = conferences
-    ) { conference ->
-        ConferenceCard(conference) {
-            navController.navigate("detail/${it.id}")
+        modifier = Modifier.padding(16.dp)
+    ) {
+        items(conferences) {
+            ConferenceCard(it) { conference ->
+                navController.navigate("detail/${conference.id}")
+            }
         }
     }
 }
@@ -64,11 +68,17 @@ private fun BodyContent(conference: Conference) {
         Box {
             CoilImage(
                 fadeIn = true,
-                modifier = Modifier.preferredHeight(150.dp),
-                request = ImageRequest.Builder(ContextAmbient.current)
+                modifier = Modifier.heightIn(min = 150.dp, max = 150.dp),
+                loading = {
+                    Box(Modifier.matchParentSize()) {
+                        CircularProgressIndicator(Modifier.align(Alignment.Center))
+                    }
+                },
+                request = ImageRequest.Builder(LocalContext.current)
                     .data(conference.logoUrl)
                     .build(),
-                contentScale = ContentScale.FillWidth
+                contentScale = ContentScale.FillWidth,
+                contentDescription = "Logo"
             )
         }
         Row(
@@ -85,7 +95,8 @@ private fun BodyContent(conference: Conference) {
                     modifier = Modifier.padding(top = 12.dp)
                 ) {
                     Icon(
-                        asset = Icons.Default.LocationOn
+                        Icons.Default.LocationOn,
+                        contentDescription = "Location"
                     )
                     Text(
                         modifier = Modifier.padding(4.dp),
@@ -99,7 +110,8 @@ private fun BodyContent(conference: Conference) {
                     modifier = Modifier.padding(top = 12.dp)
                 ) {
                     Icon(
-                        asset = Icons.Default.DateRange
+                        Icons.Default.DateRange,
+                        contentDescription = "Date"
                     )
                     Text(
                         modifier = Modifier.padding(4.dp),
@@ -178,6 +190,6 @@ fun ConferencesPreview() {
     )
     val conferences = listOf(london, berlin)
     ConferencesTheme {
-//        ConferenceScreen(conferences, PaddingValues(16.dp), ContextAmbient.current)
+
     }
 }

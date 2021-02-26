@@ -3,20 +3,19 @@ package com.ianarbuckle.conferencesfinder.ui.conferencedetail.view
 import android.os.Bundle
 import androidx.annotation.FloatRange
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.onCommit
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
-import androidx.compose.ui.platform.ContextAmbient
-import androidx.compose.ui.platform.LifecycleOwnerAmbient
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.Transformations.map
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.ianarbuckle.conferencesfinder.R
 
 @Composable
 fun rememberMapViewWithLifecycle(): MapView {
-    val context = ContextAmbient.current
+    val context = LocalContext.current
     val mapView = remember {
         MapView(context).apply {
             id = R.id.map
@@ -25,8 +24,8 @@ fun rememberMapViewWithLifecycle(): MapView {
 
     // Makes MapView follow the lifecycle of this composable
     val lifecycleObserver = rememberMapLifecycleObserver(mapView)
-    val lifecycle = LifecycleOwnerAmbient.current.lifecycle
-    onCommit(lifecycle) {
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+    DisposableEffect(lifecycle) {
         lifecycle.addObserver(lifecycleObserver)
         onDispose {
             lifecycle.removeObserver(lifecycleObserver)

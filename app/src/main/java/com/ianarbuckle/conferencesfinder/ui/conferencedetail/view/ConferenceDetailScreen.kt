@@ -3,13 +3,8 @@ package com.ianarbuckle.conferencesfinder.ui.conferencedetail.view
 import android.content.Context
 import android.graphics.Bitmap
 import androidx.annotation.ColorRes
-import androidx.compose.foundation.Icon
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Info
@@ -52,9 +47,10 @@ fun ConferenceDetailScreen(id: String, viewModel: ConferenceDetailViewModel, nav
                     IconButton(onClick = {
                         navController.popBackStack()
                     }) {
-                        androidx.compose.material.Icon(
-                            asset = Icons.Filled.ArrowBack,
-                            tint = Color.White
+                        Icon(
+                            Icons.Filled.ArrowBack,
+                            tint = Color.White,
+                            contentDescription = "Navigate up"
                         )
                     }
                 },
@@ -65,7 +61,7 @@ fun ConferenceDetailScreen(id: String, viewModel: ConferenceDetailViewModel, nav
                     }
                 })
         },
-        bodyContent = {
+        content = {
             when (uiState) {
                 is UIViewState.Success<*> -> {
                     Row {
@@ -83,16 +79,17 @@ fun ConferenceDetailScreen(id: String, viewModel: ConferenceDetailViewModel, nav
 private fun DetailScreen(conference: Conference) {
     Column {
         VenueMapView(conference.location.venue)
-        Spacer(Modifier.preferredHeight(12.dp))
+        Spacer(Modifier.size(12.dp))
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
                 text = conference.location.venue.name,
                 style = MaterialTheme.typography.h5
             )
-            Spacer(Modifier.preferredHeight(8.dp))
+            Spacer(Modifier.size(8.dp))
             Row {
                 Icon(
-                    asset = Icons.Default.LocationOn
+                    Icons.Default.LocationOn,
+                    contentDescription = "Location"
                 )
                 Text(
                     modifier = Modifier.padding(start = 4.dp),
@@ -100,9 +97,12 @@ private fun DetailScreen(conference: Conference) {
                     style = MaterialTheme.typography.subtitle2
                 )
             }
-            Spacer(Modifier.preferredHeight(8.dp))
+            Spacer(Modifier.size(8.dp))
             Row {
-                Icon(asset = Icons.Default.Info)
+                Icon(
+                    Icons.Default.Info,
+                    contentDescription = "Info"
+                )
                 Text(
                     modifier = Modifier.padding(start = 4.dp, top = 2.dp),
                     text = conference.callForPapers.websiteUrl,
@@ -126,7 +126,7 @@ private fun MapViewContainer(
     map: MapView,
     venue: Venue,
 ) {
-    AndroidView({ map }, modifier = Modifier.preferredHeight(400.dp)) { mapView ->
+    AndroidView({ map }, modifier = Modifier.size(400.dp)) { mapView ->
         mapView.getMapAsync { map ->
 
             val latLng = venue.latLng

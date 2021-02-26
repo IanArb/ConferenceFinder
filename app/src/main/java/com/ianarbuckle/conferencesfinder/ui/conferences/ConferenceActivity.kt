@@ -1,14 +1,12 @@
 package com.ianarbuckle.conferencesfinder.ui.conferences
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.compose.foundation.Text
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.platform.setContent
 import androidx.navigation.NavController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -26,9 +24,11 @@ import com.ianarbuckle.conferencesfinder.ui.conferences.viewmodel.ConferencesVie
 import com.ianarbuckle.conferencesfinder.ui.theme.ConferencesTheme
 import conferences.model.*
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 
 @AndroidEntryPoint
-class ConferenceActivity : AppCompatActivity() {
+class ConferenceActivity : ComponentActivity() {
 
     private val viewModel: ConferencesViewModel by viewModels()
     private val detailsViewModel: ConferenceDetailViewModel by viewModels()
@@ -65,7 +65,7 @@ class ConferenceActivity : AppCompatActivity() {
                     Text(text = "Conferences")
                 })
             },
-            bodyContent = {
+            content = {
                 when (uiState) {
                     is UIViewState.Success<*> -> {
                         ConferenceScreen(
@@ -91,7 +91,7 @@ class ConferenceActivity : AppCompatActivity() {
                         Text(text = "Conferences")
                     })
                 },
-                bodyContent = {
+                content = {
 //                    ConferenceScreen(
 //                        conferences(),
 //                        it,

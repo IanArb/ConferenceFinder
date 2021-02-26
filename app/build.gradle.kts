@@ -3,7 +3,6 @@ import java.util.Properties
 plugins {
     id("com.android.application")
     kotlin("android")
-    kotlin("android.extensions")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
     id("kotlinx-serialization")
@@ -11,7 +10,6 @@ plugins {
 
 android {
     compileSdkVersion(30)
-    buildToolsVersion("30.0.2")
 
     defaultConfig {
         applicationId("com.ianarbuckle.conferencesfinder")
@@ -57,27 +55,22 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerVersion = "1.4.10"
-        kotlinCompilerExtensionVersion = "1.0.0-alpha06"
-    }
-
-    packagingOptions {
-        exclude("META-INF/*.kotlin_module")
+        kotlinCompilerExtensionVersion = "1.0.0-beta01"
     }
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
-        freeCompilerArgs = listOf("-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check")
+        freeCompilerArgs = listOf("-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check",
+            "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi"
+        )
     }
 }
 
 dependencies {
 
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlinVersion}")
     //Androidx
-    implementation("androidx.appcompat:appcompat:${Versions.appCompatVersion}")
     implementation("androidx.core:core-ktx:${Versions.coreVersion}")
     implementation("androidx.constraintlayout:constraintlayout:${Versions.constraintLayoutVersion}")
     implementation("androidx.lifecycle:lifecycle-extensions:${Versions.lifecycleVersion}")
@@ -89,6 +82,7 @@ dependencies {
     implementation("com.jakewharton.threetenabp:threetenabp:${Versions.threetenabpVersion}")
 
     implementation("com.google.android.material:material:${Versions.materialVersion}")
+    implementation("androidx.ui:ui-tooling:1.0.0-alpha07")
 
     testImplementation("junit:junit:4.13")
 
@@ -112,13 +106,15 @@ dependencies {
 
     implementation("androidx.compose.ui:ui:${Versions.composeVersion}")
     implementation("androidx.compose.ui:ui-graphics:${Versions.composeVersion}")
-    implementation("androidx.ui:ui-tooling:${Versions.composeVersion}")
+    implementation("androidx.compose.ui:ui-tooling:${Versions.composeVersion}")
     implementation("androidx.compose.foundation:foundation-layout:${Versions.composeVersion}")
     implementation("androidx.compose.material:material:${Versions.composeVersion}")
     implementation("androidx.compose.runtime:runtime-livedata:${Versions.composeVersion}")
     implementation("androidx.navigation:navigation-compose:${Versions.navigationComposeVersion}")
+    implementation("androidx.paging:paging-compose:${Versions.pagingComposeVersion}")
+    implementation("androidx.activity:activity-compose:${Versions.composeVersion}")
 
-    implementation("dev.chrisbanes.accompanist:accompanist-coil:0.3.2")
+    implementation("dev.chrisbanes.accompanist:accompanist-coil:0.6.0")
 
 
     implementation(project(":common"))
