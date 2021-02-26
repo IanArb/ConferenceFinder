@@ -13,7 +13,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
-import androidx.ui.tooling.preview.Preview
 import com.ianarbuckle.conferencesfinder.ui.conferencedetail.viewmodel.ConferenceDetailViewModel
 import com.ianarbuckle.conferencesfinder.ui.conferencedetail.view.ConferenceDetailScreen
 import com.ianarbuckle.conferencesfinder.ui.conferences.view.ConferenceScreen
@@ -79,76 +78,6 @@ class ConferenceActivity : ComponentActivity() {
                 }
             }
         )
-    }
-
-    @Preview
-    @Composable
-    fun HomePreview() {
-        ConferencesTheme {
-            Scaffold(
-                topBar = {
-                    TopAppBar(title = {
-                        Text(text = "Conferences")
-                    })
-                },
-                content = {
-//                    ConferenceScreen(
-//                        conferences(),
-//                        it,
-//                        this
-//                    )
-                }
-            )
-        }
-    }
-
-    fun conferences(): List<Conference> {
-        val london = Conference(
-            id = "1",
-            name = "London Droidcon",
-            logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Tower_Bridge_from_Shad_Thames.jpg/1200px-Tower_Bridge_from_Shad_Thames.jpg",
-            location = Location(
-                country = Country(
-                    "United Kingdom",
-                    "London"),
-                venue = Venue(
-                    name = "Business Design Centre",
-                    address = "",
-                    latLng = LatLng(0.0, 0.0)
-                )
-            ),
-            dates = Dates("30th", "31st November"),
-            callForPapers = CallForPapers(
-                startDate = "",
-                endDate = "",
-                websiteUrl = ""
-            ),
-            status = "UPCOMING"
-        )
-
-        val berlin = Conference(
-            id = "1",
-            name = "Berlin Droidcon",
-            logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Tower_Bridge_from_Shad_Thames.jpg/1200px-Tower_Bridge_from_Shad_Thames.jpg",
-            location = Location(
-                country = Country(
-                    "Germany",
-                    "Berlin"),
-                venue = Venue(
-                    name = "Berlin Design Centre",
-                    address = "",
-                    latLng = LatLng(0.0, 0.0)
-                )
-            ),
-            dates = Dates("20th", "22nd August"),
-            callForPapers = CallForPapers(
-                startDate = "29th",
-                endDate = "31st",
-                websiteUrl = ""
-            ),
-            status = "ONLINE"
-        )
-        return listOf(london, berlin)
     }
 
 }
