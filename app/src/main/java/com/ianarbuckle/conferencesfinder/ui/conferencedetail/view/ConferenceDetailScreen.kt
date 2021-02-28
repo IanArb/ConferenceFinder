@@ -10,7 +10,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -27,8 +27,8 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.LatLng
 import com.ianarbuckle.conferencesfinder.R
 import com.ianarbuckle.conferencesfinder.ui.conferencedetail.viewmodel.ConferenceDetailViewModel
-import com.ianarbuckle.conferencesfinder.ui.conferences.model.UIViewState
 import com.ianarbuckle.conferencesfinder.ui.conferences.view.ErrorContent
+import com.ianarbuckle.conferencesfinder.ui.conferences.view.LoadingContent
 import com.ianarbuckle.conferencesfinder.ui.theme.ConferencesTheme
 import conferences.model.*
 import conferences.model.LatLng as ConferenceLatLng
@@ -37,7 +37,7 @@ import conferences.model.LatLng as ConferenceLatLng
 fun ConferenceDetailScreen(id: String, viewModel: ConferenceDetailViewModel, navController: NavController) {
     viewModel.init(id)
 
-    val observeState = viewModel.observeUiState.observeAsState()
+    val observeState = viewModel.uiState.collectAsState()
     val uiState = observeState.value
 
     Scaffold(
@@ -55,20 +55,24 @@ fun ConferenceDetailScreen(id: String, viewModel: ConferenceDetailViewModel, nav
                     }
                 },
                 title = {
-                    if (uiState is UIViewState.Success<*>) {
-                        val conference = uiState.result as Conference
-                        Text(text = conference.name)
+                    uiState.data?.let {
+                        Text(text = it.name)
                     }
                 })
         },
         content = {
-            when (uiState) {
-                is UIViewState.Success<*> -> {
+            when {
+                uiState.isLoading -> {
+                    LoadingContent()
+                }
+                uiState.isError -> {
+                    ErrorContent()
+                }
+                uiState.data != null -> {
                     Row {
-                        DetailScreen(uiState.result as Conference)
+                        DetailScreen(uiState.data)
                     }
                 }
-                is UIViewState.Error -> ErrorContent()
             }
         }
     )

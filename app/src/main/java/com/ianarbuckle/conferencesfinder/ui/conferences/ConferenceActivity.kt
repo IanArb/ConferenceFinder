@@ -6,7 +6,6 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.navigation.NavController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -18,13 +17,14 @@ import com.ianarbuckle.conferencesfinder.ui.conferencedetail.view.ConferenceDeta
 import com.ianarbuckle.conferencesfinder.ui.conferences.view.ConferenceScreen
 import com.ianarbuckle.conferencesfinder.ui.conferences.view.ErrorContent
 import com.ianarbuckle.conferencesfinder.ui.conferences.view.LoadingContent
-import com.ianarbuckle.conferencesfinder.ui.conferences.model.UIViewState
 import com.ianarbuckle.conferencesfinder.ui.conferences.viewmodel.ConferencesViewModel
 import com.ianarbuckle.conferencesfinder.ui.theme.ConferencesTheme
 import conferences.model.*
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.lifecycleScope
 
 @AndroidEntryPoint
 class ConferenceActivity : ComponentActivity() {
@@ -55,7 +55,11 @@ class ConferenceActivity : ComponentActivity() {
 
     @Composable
     fun HomeScreen(viewModel: ConferencesViewModel, navController: NavController) {
-        val observeState = viewModel.conferencesObservable.observeAsState()
+        lifecycleScope.launchWhenStarted {
+            viewModel.init()
+        }
+
+        val observeState = viewModel.uiState.collectAsState()
         val uiState = observeState.value
 
         Scaffold(
@@ -65,16 +69,19 @@ class ConferenceActivity : ComponentActivity() {
                 })
             },
             content = {
-                when (uiState) {
-                    is UIViewState.Success<*> -> {
-                        ConferenceScreen(
-                            uiState.result as List<Conference>,
-                            it,
-                            navController
-                        )
+                when {
+                    uiState.isLoading -> {
+                        LoadingContent()
                     }
-                    is UIViewState.Error -> ErrorContent()
-                    is UIViewState.Loading -> LoadingContent()
+                    uiState.isError -> {
+                        ErrorContent()
+                    }
+                    !uiState.data.isNullOrEmpty() -> {
+                        ConferenceScreen(
+                            conferences = uiState.data,
+                            innerPadding = it,
+                            navController = navController)
+                    }
                 }
             }
         )

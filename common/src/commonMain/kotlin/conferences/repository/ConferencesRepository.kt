@@ -53,5 +53,4 @@ class ConferencesRepository {
         errorMessage = "Failed to get conference"
     )
 
-
 }

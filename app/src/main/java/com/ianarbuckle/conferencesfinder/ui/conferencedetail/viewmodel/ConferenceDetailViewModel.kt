@@ -1,39 +1,40 @@
 package com.ianarbuckle.conferencesfinder.ui.conferencedetail.viewmodel
 
-import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ianarbuckle.conferencesfinder.ui.conferences.model.UIViewState
+import com.ianarbuckle.conferencesfinder.ui.conferencedetail.model.ConferencesDetailUiData
 import com.ianarbuckle.conferencesfinder.ui.conferences.usecase.ConferencesUseCase
-import com.ianarbuckle.conferencesfinder.utils.asLiveData
+import com.ianarbuckle.conferencesfinder.utils.CoroutinesDispatcherProvider
 import conferences.utils.Result
-import kotlinx.coroutines.Dispatchers
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class ConferenceDetailViewModel @ViewModelInject constructor(private val useCase: ConferencesUseCase): ViewModel() {
+@HiltViewModel
+class ConferenceDetailViewModel @Inject constructor(private val useCase: ConferencesUseCase, private val dispatchers: CoroutinesDispatcherProvider): ViewModel() {
 
-    private val mutableUiState = MutableLiveData<Any>()
+    private val _uiState = MutableStateFlow(ConferencesDetailUiData(isLoading = true))
 
-    val observeUiState = mutableUiState.asLiveData()
+    val uiState = _uiState.asStateFlow()
 
     fun init(id: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatchers.io) {
             val result = useCase.fetchConferenceById(id)
 
-            withContext(Dispatchers.Main) {
+            withContext(dispatchers.main) {
                 if (result is Result.Success) {
-                    emitUiState(UIViewState.Success(result.data))
+                    emitUiState(ConferencesDetailUiData(data = result.data))
                 } else {
-                    emitUiState(UIViewState.Error)
+                    emitUiState(ConferencesDetailUiData(isError = true))
                 }
             }
         }
     }
 
-    private fun emitUiState(uiState: UIViewState<Any>) {
-        mutableUiState.postValue(uiState)
+    private fun emitUiState(uiState: ConferencesDetailUiData) {
+        _uiState.value = uiState
     }
-
 }
